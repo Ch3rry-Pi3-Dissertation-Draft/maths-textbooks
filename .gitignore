@@ -1,6 +1,3 @@
-# External reference textbooks are not project-authored artifacts.
-documents/
-
 # Local Codex state.
 .agents/
 .codex/

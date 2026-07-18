@@ -36,7 +36,7 @@ Presentation source files and generated visual assets are stored under
 
 ## Reference Material
 
-External reference textbooks are intentionally excluded from version control.
+External reference textbooks are stored under `documents/` using Git LFS.
 They are used only as topic maps; the chapter structure, explanations,
 examples, equations, and exercises in this repository are independently
 written.
