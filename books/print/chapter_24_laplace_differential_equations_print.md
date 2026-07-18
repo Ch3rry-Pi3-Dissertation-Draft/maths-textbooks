@@ -1,0 +1,3507 @@
+```{=latex}
+\clearpage
+```
+```{=latex}
+\fancyhead[L]{\sffamily\small\color{ChapterBlue}\textbf{Chapter 24}}
+\fancyhead[R]{\sffamily\small\color{BodyInk}Laplace ODE Methods}
+```
+# Chapter 24 - Laplace ODE Methods
+
+Chapters 21 through 23 developed forward transforms, inverse transforms,
+translation, and convolution. We can now use those tools to solve linear
+ordinary differential equations with constant coefficients.
+
+The central idea is that a derivative in time becomes an algebraic expression
+in the transform variable $s$. Initial values appear inside that expression,
+so an entire initial-value problem can be transformed at once.
+
+This chapter will:
+
+-   derive the transform formulas for derivatives
+-   build a reliable transform-solve-invert workflow
+-   solve first-order, second-order, and higher-order initial-value problems
+-   handle ordinary, resonant, unknown, and delayed forcing
+-   explain what changes when initial information is missing or given away from
+    $t=0$
+
+Every worked example and exercise is independently constructed. The reference
+chapter is used only to identify the mathematical topics that belong here.
+
+```{=latex}
+\Needspace{20\baselineskip}
+```
+## Transforming Derivatives {#block-1-transforming-derivatives}
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### The Goal Of This Block {#the-goal-of-this-block-1}
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+The goal is to understand where the initial-value terms in a derivative
+transform come from, rather than treating the formulas as unexplained rules.
+
+```{=latex}
+\Needspace{8\baselineskip}
+```
+> differentiation becomes multiplication by $s$, but values at $t=0$ must be
+> subtracted because the Laplace integral begins at zero.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Notation Before We Start {#notation-before-we-start-2}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Let $y(t)$ be a function defined for $t\geq0$, and write:
+
+$$
+Y(s)=\mathcal{L}\{y(t)\}
+=\int_0^\infty e^{-st}y(t)\,dt.
+$$
+
+Here:
+
+-   $t$ is the time variable
+-   $s$ is the transform variable
+-   $y'(t)$ is the first derivative of $y$
+-   $y^{(n)}(t)$ is the $n$th derivative, not the $n$th power of $y$
+-   $y(0)$, $y'(0)$, and so on are initial values
+
+We assume that $y$ and the derivatives being transformed behave well enough
+for the required Laplace transforms and boundary limits to exist.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Derive The First-Derivative Formula {#derive-the-first-derivative-formula-3}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Start from the definition:
+
+$$
+\mathcal{L}\{y'(t)\}
+=\int_0^\infty e^{-st}y'(t)\,dt.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use integration by parts with:
+
+$$
+u=e^{-st},
+\qquad
+dv=y'(t)\,dt.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Differentiating and integrating the selected parts gives:
+
+$$
+du=-se^{-st}\,dt,
+\qquad
+v=y(t).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Apply $\int u\,dv=uv-\int v\,du$:
+
+$$
+\begin{aligned}
+\mathcal{L}\{y'\}
+&=\left[e^{-st}y(t)\right]_0^\infty
+-\int_0^\infty y(t)(-se^{-st})\,dt\\
+&=\left[e^{-st}y(t)\right]_0^\infty
++s\int_0^\infty e^{-st}y(t)\,dt.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Under the transform assumptions, $e^{-st}y(t)\to0$ as $t\to\infty$.
+At the lower limit, $e^{-s(0)}y(0)=y(0)$. Therefore:
+
+$$
+\left[e^{-st}y(t)\right]_0^\infty
+=0-y(0)
+=-y(0).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The remaining integral is $Y(s)$, so:
+
+$$
+\boxed{
+\mathcal{L}\{y'(t)\}=sY(s)-y(0)
+}.
+$$
+
+The term $-y(0)$ is the lower boundary contribution from integration by
+parts. It is not an optional correction.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Build The Second-Derivative Formula {#build-the-second-derivative-formula-4}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Apply the first-derivative formula to the function $y'(t)$:
+
+$$
+\mathcal{L}\{y''(t)\}
+=s\mathcal{L}\{y'(t)\}-y'(0).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Now substitute the formula just derived:
+
+$$
+\mathcal{L}\{y'(t)\}=sY(s)-y(0).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+This gives:
+
+$$
+\begin{aligned}
+\mathcal{L}\{y''(t)\}
+&=s[sY(s)-y(0)]-y'(0)\\
+&=s^2Y(s)-sy(0)-y'(0).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The substitution produces the second-derivative formula:
+
+$$
+\boxed{
+\mathcal{L}\{y''(t)\}
+=s^2Y(s)-sy(0)-y'(0)
+}.
+$$
+
+Notice the pattern: a second derivative requires two initial values.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### The General Derivative Formula {#the-general-derivative-formula-5}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Repeating the same step gives:
+
+$$
+\boxed{
+\mathcal{L}\{y^{(n)}(t)\}
+=s^nY(s)
+-s^{n-1}y(0)
+-s^{n-2}y'(0)
+-\cdots
+-y^{(n-1)}(0)
+}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+For the third derivative, write every term explicitly:
+
+$$
+\boxed{
+\mathcal{L}\{y'''(t)\}
+=s^3Y(s)-s^2y(0)-sy'(0)-y''(0)
+}.
+$$
+
+A useful reading pattern is:
+
+-   begin with $s^nY(s)$
+-   lower the power of $s$ by one each time
+-   move through the initial values from $y(0)$ up to $y^{(n-1)}(0)$
+-   subtract every initial-value term
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### A Small Substitution Check {#a-small-substitution-check-6}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Suppose:
+
+$$
+y(0)=2,
+\qquad
+y'(0)=-3.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use the second-derivative formula:
+
+$$
+\mathcal{L}\{y''\}=s^2Y-sy(0)-y'(0).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Substitute both values, including the negative sign in $y'(0)=-3$:
+
+$$
+\begin{aligned}
+\mathcal{L}\{y''\}
+&=s^2Y-s(2)-(-3)\\
+&=s^2Y-2s+3.
+\end{aligned}
+$$
+
+The last term is positive because the formula subtracts a negative initial
+slope.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Common Formula Errors {#common-formula-errors-7}
+
+Check for these mistakes:
+
+-   writing $\mathcal{L}\{y'\}=sY$ and losing $y(0)$
+-   writing $-y'(0)$ before the term $-sy(0)$ in the second-derivative formula
+    and then forgetting the factor $s$
+-   treating $y''(0)$ as part of $\mathcal{L}\{y''\}$; it first appears when a
+    third derivative is transformed
+-   dropping a double negative when an initial value is negative
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+What to remember:
+
+```{=latex}
+\Needspace{8\baselineskip}
+```
+> write the full derivative-transform formula before inserting any numbers.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Block 1 Summary {#block-1-summary-8}
+
+The transform of a derivative contains $Y(s)$ and the initial values below
+that derivative order. Those initial terms arise from integration by parts and
+carry the initial-value problem into the transform domain.
+
+```{=latex}
+\Needspace{20\baselineskip}
+```
+## The Transform-Domain Workflow {#block-2-the-transform-domain-workflow}
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### The Goal Of This Block {#the-goal-of-this-block-9}
+
+The goal is to turn a differential-equation initial-value problem into a
+repeatable sequence of local operations.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### The Class Of Problems {#the-class-of-problems-10}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+We consider a linear equation with constant coefficients:
+
+$$
+a_ny^{(n)}+a_{n-1}y^{(n-1)}+\cdots+a_1y'+a_0y=r(t),
+$$
+
+together with enough initial values at $t=0$.
+
+Here:
+
+-   $a_0,\ldots,a_n$ are constants
+-   $r(t)$ is the forcing or input
+-   $y(t)$ is the unknown response
+
+The method works because every derivative transform is algebraic in $s$ and
+$Y(s)$.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### The Six-Step Workflow {#the-six-step-workflow-11}
+
+Use this sequence:
+
+1.  Define $Y(s)=\mathcal{L}\{y(t)\}$.
+2.  Transform every term in the differential equation.
+3.  Substitute the initial values immediately and carefully.
+4.  Collect every term containing $Y(s)$.
+5.  Solve algebraically for $Y(s)$.
+6.  Rewrite $Y(s)$ into invertible pieces and take the inverse transform.
+
+Afterward, check the initial values and, when practical, substitute the result
+back into the original equation.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+The practical meaning:
+
+```{=latex}
+\Needspace{8\baselineskip}
+```
+> the differential equation becomes an algebra problem, but the inverse
+> transform is still part of the solution and must be prepared carefully.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### A Symbolic Second-Order Setup {#a-symbolic-second-order-setup-12}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Consider:
+
+$$
+y''+ay'+by=r(t),
+\qquad
+y(0)=c_0,
+\qquad
+y'(0)=c_1.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Let $R(s)=\mathcal{L}\{r(t)\}$. Transform each term separately:
+
+$$
+\begin{aligned}
+\mathcal{L}\{y''\}&=s^2Y-sc_0-c_1,\\
+\mathcal{L}\{ay'\}&=a(sY-c_0),\\
+\mathcal{L}\{by\}&=bY,\\
+\mathcal{L}\{r(t)\}&=R(s).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Insert those four expressions into the equation:
+
+$$
+[s^2Y-sc_0-c_1]+a[sY-c_0]+bY=R(s).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Expand only after the substitution is visible:
+
+$$
+s^2Y-sc_0-c_1+asY-ac_0+bY=R(s).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Collect the terms containing $Y$ on the left and move the initial-value terms
+to the right:
+
+$$
+(s^2+as+b)Y
+=R(s)+sc_0+c_1+ac_0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Divide by the coefficient of $Y$:
+
+$$
+\boxed{
+Y(s)=
+\frac{R(s)+sc_0+c_1+ac_0}{s^2+as+b}
+}.
+$$
+
+This is not yet the time-domain solution. The final task is to invert this
+specific rational expression.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Why Initial Conditions Are Applied Early {#why-initial-conditions-are-applied-early-13}
+
+In earlier solution methods, we often found a general family first and then
+used initial values to determine constants. In the Laplace method, values such
+as $y(0)$ and $y'(0)$ enter while derivatives are transformed.
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+For example:
+
+$$
+\mathcal{L}\{y''\}=s^2Y-sy(0)-y'(0).
+$$
+
+Once $y(0)$ and $y'(0)$ are inserted, the transform equation already encodes
+both the differential equation and its initial conditions.
+
+This is why the method solves the full initial-value problem in one transform
+calculation.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Do Not Invert Too Early {#do-not-invert-too-early-14}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Suppose a transformed equation contains several copies of $Y$:
+
+$$
+s^2Y-2s+1+3sY-6+2Y=\frac4s.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Do not attempt to invert individual terms at this stage. First collect $Y$:
+
+$$
+(s^2+3s+2)Y-2s-5=\frac4s.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Move the non-$Y$ terms to the right:
+
+$$
+(s^2+3s+2)Y=\frac4s+2s+5.
+$$
+
+Only after isolating $Y$ should partial fractions, completing the square, or a
+shift theorem be chosen.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Block 2 Summary {#block-2-summary-15}
+
+Transform the equation, insert data, isolate $Y(s)$ completely, prepare it for
+inversion, and then verify the time-domain result. Keeping those stages
+separate prevents most algebraic errors.
+
+```{=latex}
+\Needspace{20\baselineskip}
+```
+## First-Order Initial-Value Problems {#block-3-first-order-initial-value-problems}
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### The Goal Of This Block {#the-goal-of-this-block-16}
+
+The goal is to practise the full workflow on first-order equations before
+adding the extra initial term required by a second derivative.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### A Homogeneous Example {#a-homogeneous-example-17}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Solve:
+
+$$
+y'+3y=0,
+\qquad
+y(0)=4.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Define:
+
+$$
+Y(s)=\mathcal{L}\{y(t)\}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Transform the equation term by term:
+
+$$
+\mathcal{L}\{y'\}+3\mathcal{L}\{y\}=\mathcal{L}\{0\}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use $\mathcal{L}\{y'\}=sY-y(0)$ and $\mathcal{L}\{0\}=0$:
+
+$$
+[sY-y(0)]+3Y=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Substitute $y(0)=4$:
+
+$$
+sY-4+3Y=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Collect $Y$ and move $-4$ to the right:
+
+$$
+(s+3)Y=4.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Divide by $s+3$:
+
+$$
+Y(s)=\frac4{s+3}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use $1/(s+a)\longleftrightarrow e^{-at}$:
+
+$$
+\boxed{y(t)=4e^{-3t}}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Verify The Homogeneous Solution {#verify-the-homogeneous-solution-18}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Differentiate the proposed solution:
+
+$$
+y'(t)=-12e^{-3t}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Substitute $y$ and $y'$ into the differential equation:
+
+$$
+\begin{aligned}
+y'+3y
+&=-12e^{-3t}+3(4e^{-3t})\\
+&=-12e^{-3t}+12e^{-3t}\\
+&=0.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Check the initial value:
+
+$$
+y(0)=4e^0=4.
+$$
+
+Both requirements are satisfied.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### A Constant-Forcing Example {#a-constant-forcing-example-19}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Solve:
+
+$$
+y'+2y=6,
+\qquad
+y(0)=-1.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Transform both sides:
+
+$$
+[sY-y(0)]+2Y=\frac6s.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Insert $y(0)=-1$. Because the formula subtracts $y(0)$, this becomes:
+
+$$
+sY-(-1)+2Y=\frac6s.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Remove the double negative and collect $Y$:
+
+$$
+(s+2)Y+1=\frac6s.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Subtract $1$ from both sides:
+
+$$
+(s+2)Y=\frac6s-1.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Write $1=s/s$ so the right side has one denominator:
+
+$$
+(s+2)Y=\frac{6-s}{s}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Divide by $s+2$:
+
+$$
+Y=\frac{6-s}{s(s+2)}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Prepare And Invert The Forced Transform {#prepare-and-invert-the-forced-transform-20}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use:
+
+$$
+\frac{6-s}{s(s+2)}=\frac As+\frac B{s+2}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Multiply by $s(s+2)$:
+
+$$
+6-s=A(s+2)+Bs.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Set $s=0$:
+
+$$
+6=2A,
+\qquad
+A=3.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Set $s=-2$:
+
+$$
+6-(-2)=B(-2),
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+so:
+
+$$
+8=-2B,
+\qquad
+B=-4.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Substituting the two partial-fraction constants gives:
+
+$$
+Y=\frac3s-\frac4{s+2}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Invert each term:
+
+$$
+\boxed{y(t)=3-4e^{-2t}}.
+$$
+
+The constant level $3$ is the equilibrium selected by $2y=6$. The
+exponential term adjusts the initial value from $-1$ toward that equilibrium.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### A Delayed Input {#a-delayed-input-21}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Solve:
+
+$$
+y'+y=u(t-2),
+\qquad
+y(0)=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Transform the derivative, the unknown, and the delayed step:
+
+$$
+[sY-y(0)]+Y=\frac{e^{-2s}}s.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Insert $y(0)=0$ and collect $Y$:
+
+$$
+(s+1)Y=\frac{e^{-2s}}s.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Divide by $s+1$:
+
+$$
+Y=e^{-2s}\frac1{s(s+1)}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+First invert the undelayed factor. Decompose it as:
+
+$$
+\frac1{s(s+1)}=\frac1s-\frac1{s+1}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Hence its inverse is:
+
+$$
+f(t)=1-e^{-t}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Now apply the delay $a=2$: attach $u(t-2)$ and replace $t$ by $t-2$ inside
+$f$:
+
+$$
+\boxed{
+y(t)=u(t-2)\left[1-e^{-(t-2)}\right]
+}.
+$$
+
+![Delayed unit input and its first-order response](books/assets/chapter_24/chapter_24_figure-1.png)
+
+The response remains zero before the input switches on. After $t=2$, it rises
+toward the equilibrium value $1$.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Verify The Delayed Equation By Intervals {#verify-the-delayed-equation-by-intervals-22}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+For $0\leq t<2$, the step is zero and $y(t)=0$. Therefore:
+
+$$
+y'+y=0+0=0=u(t-2).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+For $t>2$, remove the step and write:
+
+$$
+y(t)=1-e^{-(t-2)}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Differentiate on this interval:
+
+$$
+y'(t)=e^{-(t-2)}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Add $y'$ and $y$:
+
+$$
+\begin{aligned}
+y'+y
+&=e^{-(t-2)}+[1-e^{-(t-2)}]\\
+&=1\\
+&=u(t-2),
+\qquad t>2.
+\end{aligned}
+$$
+
+The formula also gives $y(0)=0$. The switch point itself does not affect the
+Laplace calculation.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Block 3 Summary {#block-3-summary-23}
+
+For a first-order equation, transform $y'$ as $sY-y(0)$, isolate $Y$, and
+then choose direct inversion, partial fractions, or time translation. Delayed
+forcing must produce a delayed response, not a response that begins early.
+
+```{=latex}
+\Needspace{20\baselineskip}
+```
+## Second-Order Homogeneous Problems {#block-4-second-order-homogeneous-problems}
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### The Goal Of This Block {#the-goal-of-this-block-24}
+
+The goal is to solve a second-order initial-value problem while keeping both
+initial-value contributions attached to the correct derivative transforms.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### The Two Formulas We Need {#the-two-formulas-we-need-25}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+For a second-order equation, keep these formulas together:
+
+$$
+\begin{aligned}
+\mathcal{L}\{y'\}
+&=sY-y(0),\\
+\mathcal{L}\{y''\}
+&=s^2Y-sy(0)-y'(0).
+\end{aligned}
+$$
+
+The value $y(0)$ appears in both formulas. The value $y'(0)$ appears only in
+the transform of $y''$.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### An Oscillatory Decay Example {#an-oscillatory-decay-example-26}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Solve:
+
+$$
+y''+4y'+13y=0,
+\qquad
+y(0)=1,
+\qquad
+y'(0)=1.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Define $Y(s)=\mathcal{L}\{y(t)\}$. Transform the entire equation:
+
+$$
+\mathcal{L}\{y''\}
++4\mathcal{L}\{y'\}
++13\mathcal{L}\{y\}
+=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Write the derivative formulas before substituting the values:
+
+$$
+[s^2Y-sy(0)-y'(0)]
++4[sY-y(0)]
++13Y
+=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Insert $y(0)=1$ and $y'(0)=1$:
+
+$$
+[s^2Y-s-1]+4[sY-1]+13Y=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Expand the factor $4$:
+
+$$
+s^2Y-s-1+4sY-4+13Y=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Collect the $Y$ terms and the remaining terms separately:
+
+$$
+(s^2+4s+13)Y-s-5=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Add $s+5$ to both sides:
+
+$$
+(s^2+4s+13)Y=s+5.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Divide by the quadratic coefficient of $Y$:
+
+$$
+Y=\frac{s+5}{s^2+4s+13}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Complete The Square And Invert {#complete-the-square-and-invert-27}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Complete the square in the denominator:
+
+$$
+\begin{aligned}
+s^2+4s+13
+&=(s^2+4s+4)+9\\
+&=(s+2)^2+3^2.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Rewrite the numerator in terms of $s+2$:
+
+$$
+s+5=(s+2)+3.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Substitute both rewrites into $Y$:
+
+$$
+Y
+=\frac{s+2}{(s+2)^2+3^2}
++\frac3{(s+2)^2+3^2}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use the shifted cosine and sine pairs:
+
+$$
+\begin{aligned}
+\frac{s+a}{(s+a)^2+b^2}
+&\longleftrightarrow e^{-at}\cos(bt),\\
+\frac{b}{(s+a)^2+b^2}
+&\longleftrightarrow e^{-at}\sin(bt).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Here $a=2$ and $b=3$, so:
+
+$$
+\boxed{
+y(t)=e^{-2t}\cos(3t)+e^{-2t}\sin(3t)
+}.
+$$
+
+The factor $e^{-2t}$ controls decay, while the sine and cosine factors create
+oscillation with angular frequency $3$.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Check Both Initial Values {#check-both-initial-values-28}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+At $t=0$:
+
+$$
+\begin{aligned}
+y(0)
+&=e^0\cos0+e^0\sin0\\
+&=1+0\\
+&=1.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Differentiate the two products separately:
+
+$$
+\begin{aligned}
+\frac{d}{dt}[e^{-2t}\cos(3t)]
+&=-2e^{-2t}\cos(3t)-3e^{-2t}\sin(3t),\\
+\frac{d}{dt}[e^{-2t}\sin(3t)]
+&=-2e^{-2t}\sin(3t)+3e^{-2t}\cos(3t).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Add them to obtain $y'(t)$, then set $t=0$:
+
+$$
+\begin{aligned}
+y'(0)
+&=-2(1)(1)-3(1)(0)-2(1)(0)+3(1)(1)\\
+&=-2+3\\
+&=1.
+\end{aligned}
+$$
+
+The transformed solution preserves both prescribed values.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### A Frequent Second-Order Error {#a-frequent-second-order-error-29}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+For the same data, this line is incomplete:
+
+$$
+\mathcal{L}\{y''\}=s^2Y-y'(0).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+It has lost the term $-sy(0)$. The correct substitution is:
+
+$$
+\begin{aligned}
+\mathcal{L}\{y''\}
+&=s^2Y-sy(0)-y'(0)\\
+&=s^2Y-s(1)-1\\
+&=s^2Y-s-1.
+\end{aligned}
+$$
+
+Writing the general formula first makes the missing term much easier to spot.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Block 4 Summary {#block-4-summary-30}
+
+A second-order transform contains both $y(0)$ and $y'(0)$. Once $Y(s)$ is
+isolated, the denominator structure determines whether to factor, complete a
+square, or use another inversion method.
+
+```{=latex}
+\Needspace{20\baselineskip}
+```
+## Nonhomogeneous Second-Order Problems {#block-5-nonhomogeneous-second-order-problems}
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### The Goal Of This Block {#the-goal-of-this-block-31}
+
+The goal is to see how forcing changes the numerator of $Y(s)$ and how the
+form of that numerator controls the inversion work.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### A Constant-Forcing Example {#a-constant-forcing-example-32}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Solve:
+
+$$
+y''+3y'+2y=4,
+\qquad
+y(0)=0,
+\qquad
+y'(0)=1.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Transform the equation:
+
+$$
+\mathcal{L}\{y''\}
++3\mathcal{L}\{y'\}
++2\mathcal{L}\{y\}
+=\mathcal{L}\{4\}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Insert the transform formulas and $\mathcal{L}\{4\}=4/s$:
+
+$$
+[s^2Y-sy(0)-y'(0)]
++3[sY-y(0)]
++2Y
+=\frac4s.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Now substitute $y(0)=0$ and $y'(0)=1$:
+
+$$
+[s^2Y-1]+3[sY]+2Y=\frac4s.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Collect $Y$:
+
+$$
+(s^2+3s+2)Y-1=\frac4s.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Add $1$ to both sides:
+
+$$
+(s^2+3s+2)Y=\frac4s+1.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Write $1=s/s$ and combine:
+
+$$
+(s^2+3s+2)Y=\frac{s+4}{s}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Factor the quadratic and divide:
+
+$$
+Y=\frac{s+4}{s(s+1)(s+2)}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Find The Partial-Fraction Constants {#find-the-partial-fraction-constants-33}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use the decomposition:
+
+$$
+\frac{s+4}{s(s+1)(s+2)}
+=\frac As+\frac B{s+1}+\frac C{s+2}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Multiply every term by $s(s+1)(s+2)$:
+
+$$
+s+4=A(s+1)(s+2)+Bs(s+2)+Cs(s+1).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Set $s=0$. The terms containing $B$ and $C$ vanish:
+
+$$
+4=A(1)(2),
+\qquad
+A=2.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Set $s=-1$. The terms containing $A$ and $C$ vanish:
+
+$$
+-1+4=B(-1)(1),
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+so:
+
+$$
+3=-B,
+\qquad
+B=-3.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Set $s=-2$. The terms containing $A$ and $B$ vanish:
+
+$$
+-2+4=C(-2)(-1),
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+so:
+
+$$
+2=2C,
+\qquad
+C=1.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The prepared transform is:
+
+$$
+Y=\frac2s-\frac3{s+1}+\frac1{s+2}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Invert term by term:
+
+$$
+\boxed{
+y(t)=2-3e^{-t}+e^{-2t}
+}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Interpret And Check The Constant-Forced Solution {#interpret-and-check-the-constant-forced-solution-34}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+As $t\to\infty$, both exponentials approach zero, so:
+
+$$
+y(t)\to2.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+This agrees with the constant equilibrium obtained by setting the derivatives
+to zero in the original equation:
+
+$$
+2y=4,
+\qquad
+y=2.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Check the initial position:
+
+$$
+y(0)=2-3+1=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Differentiate:
+
+$$
+y'(t)=3e^{-t}-2e^{-2t}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Evaluating the derivative at $t=0$ gives:
+
+$$
+y'(0)=3-2=1.
+$$
+
+The long-term behaviour and both initial values agree with the problem.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### A Resonant Forcing Example {#a-resonant-forcing-example-35}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Solve:
+
+$$
+y''+9y=\sin(3t),
+\qquad
+y(0)=0,
+\qquad
+y'(0)=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Transform the equation:
+
+$$
+[s^2Y-sy(0)-y'(0)]+9Y=\frac3{s^2+9}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Insert the zero initial values:
+
+$$
+(s^2+9)Y=\frac3{s^2+9}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Divide by $s^2+9$:
+
+$$
+Y=\frac3{(s^2+9)^2}.
+$$
+
+The repeated quadratic is the transform-domain signature of resonance here.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Invert The Repeated Trigonometric Factor {#invert-the-repeated-trigonometric-factor-36}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Write the squared denominator as a product:
+
+$$
+\frac1{(s^2+9)^2}
+=\frac1{s^2+9}\frac1{s^2+9}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Since:
+
+$$
+\frac1{s^2+9}\longleftrightarrow\frac13\sin(3t),
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+the inverse product is a convolution:
+
+$$
+\mathcal{L}^{-1}\left\{\frac1{(s^2+9)^2}\right\}
+=\frac19\int_0^t\sin(3\tau)\sin(3(t-\tau))\,d\tau.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use the product-to-sum identity:
+
+$$
+\sin A\sin B
+=\frac12[\cos(A-B)-\cos(A+B)].
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Here $A=3\tau$ and $B=3t-3\tau$, so:
+
+$$
+A-B=6\tau-3t,
+\qquad
+A+B=3t.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Substitute these expressions:
+
+$$
+\begin{aligned}
+\mathcal{L}^{-1}\left\{\frac1{(s^2+9)^2}\right\}
+&=\frac1{18}\int_0^t
+[\cos(6\tau-3t)-\cos(3t)]\,d\tau\\
+&=\frac1{18}
+\left[
+\frac16\sin(6\tau-3t)-\tau\cos(3t)
+\right]_0^t.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Evaluate the upper and lower limits:
+
+$$
+\begin{aligned}
+\left[
+\frac16\sin(6\tau-3t)-\tau\cos(3t)
+\right]_0^t
+&=\left[\frac16\sin(3t)-t\cos(3t)\right]
+-\left[\frac16\sin(-3t)-0\right]\\
+&=\frac13\sin(3t)-t\cos(3t).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Multiplying the evaluated convolution by $1/18$ gives:
+
+$$
+\mathcal{L}^{-1}\left\{\frac1{(s^2+9)^2}\right\}
+=\frac{\sin(3t)-3t\cos(3t)}{54}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The required transform has an additional factor $3$:
+
+$$
+\boxed{
+y(t)=\frac{\sin(3t)-3t\cos(3t)}{18}
+}.
+$$
+
+The factor $t\cos(3t)$ allows the oscillation envelope to grow. That growth
+is the time-domain sign of resonant forcing.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Block 5 Summary {#block-5-summary-37}
+
+Forcing appears through its transform on the right side. After $Y$ is
+isolated, ordinary factors may lead to partial fractions, while repeated
+trigonometric factors can reveal resonance and may be inverted by convolution.
+
+```{=latex}
+\Needspace{20\baselineskip}
+```
+## Unknown Forcing And Convolution {#block-6-unknown-forcing-and-convolution}
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### The Goal Of This Block {#the-goal-of-this-block-38}
+
+The goal is to solve an equation structurally even when the forcing function
+has not been specified.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Separate Initial Response From Forced Response {#separate-initial-response-from-forced-response-39}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Consider:
+
+$$
+y''+4y=f(t),
+\qquad
+y(0)=c_0,
+\qquad
+y'(0)=c_1.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Let:
+
+$$
+F(s)=\mathcal{L}\{f(t)\}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Transform the equation:
+
+$$
+[s^2Y-sc_0-c_1]+4Y=F(s).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Collect $Y$ and move the initial terms to the right:
+
+$$
+(s^2+4)Y=F(s)+sc_0+c_1.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Divide by $s^2+4$ and split the numerator:
+
+$$
+Y
+=\frac{sc_0+c_1}{s^2+4}
++\frac{F(s)}{s^2+4}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Separate the first numerator further:
+
+$$
+Y
+=c_0\frac{s}{s^2+4}
++\frac{c_1}{2}\frac2{s^2+4}
++F(s)\frac1{s^2+4}.
+$$
+
+The first two terms encode the initial state. The final product encodes the
+effect of the forcing.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Invert The Unknown-Forcing Formula {#invert-the-unknown-forcing-formula-40}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use the transform pairs:
+
+$$
+\frac{s}{s^2+4}\longleftrightarrow\cos(2t),
+\qquad
+\frac2{s^2+4}\longleftrightarrow\sin(2t).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Also:
+
+$$
+\frac1{s^2+4}\longleftrightarrow\frac12\sin(2t).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The product $F(s)/(s^2+4)$ becomes a convolution. Therefore:
+
+$$
+\boxed{
+y(t)
+=c_0\cos(2t)
++\frac{c_1}{2}\sin(2t)
++\frac12\int_0^t\sin(2(t-\tau))f(\tau)\,d\tau
+}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The formula has two conceptually different parts:
+
+$$
+y(t)=\text{response to initial data}+\text{response to forcing}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### The Impulse-Response View {#the-impulse-response-view-41}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+With zero initial values, the formula simplifies to:
+
+$$
+y(t)=\frac12\int_0^t\sin(2(t-\tau))f(\tau)\,d\tau.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Define:
+
+$$
+h(t)=\frac12\sin(2t).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+With this definition, the convolution formula becomes:
+
+$$
+\boxed{y=h*f}.
+$$
+
+The function $h$ is called the **impulse response** of this zero-initial-state
+system. It describes how the differential operator responds, while
+convolution combines that response with the complete input history.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+Another way to see it:
+
+```{=latex}
+\Needspace{8\baselineskip}
+```
+> the denominator $s^2+4$ belongs to the differential operator; its inverse
+> transform becomes the kernel that processes the forcing.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### A Concrete Forcing Check {#a-concrete-forcing-check-42}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Take zero initial values and let $f(t)=e^{-t}$. The convolution formula gives:
+
+$$
+y(t)=\frac12\int_0^t\sin(2(t-\tau))e^{-\tau}\,d\tau.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+An equivalent transform-domain calculation begins from:
+
+$$
+Y=\frac1{(s+1)(s^2+4)}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use:
+
+$$
+\frac1{(s+1)(s^2+4)}
+=\frac A{s+1}+\frac{Bs+C}{s^2+4}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Multiply by $(s+1)(s^2+4)$:
+
+$$
+1=A(s^2+4)+(Bs+C)(s+1).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Expand and group powers of $s$:
+
+$$
+1=(A+B)s^2+(B+C)s+(4A+C).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Match coefficients with $0s^2+0s+1$:
+
+$$
+A+B=0,
+\qquad
+B+C=0,
+\qquad
+4A+C=1.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+From $B=-A$ and $C=-B=A$, the final equation becomes:
+
+$$
+4A+A=1,
+\qquad
+A=\frac15.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Substituting $A=1/5$ into $B=-A$ and $C=A$ gives:
+
+$$
+B=-\frac15,
+\qquad
+C=\frac15.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Substitute the constants and invert:
+
+$$
+\boxed{
+y(t)=\frac15e^{-t}-\frac15\cos(2t)+\frac1{10}\sin(2t)
+}.
+$$
+
+This explicit result is exactly the convolution above, written after the
+integral has been evaluated.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Block 6 Summary {#block-6-summary-43}
+
+An unspecified forcing can remain as $F(s)$. Products involving $F(s)$ become
+convolutions, which naturally separate the system's own response from the
+input that drives it.
+
+```{=latex}
+\Needspace{20\baselineskip}
+```
+## Higher Order And Nonstandard Data {#block-7-higher-order-and-nonstandard-data}
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### The Goal Of This Block {#the-goal-of-this-block-44}
+
+The goal is to extend the method beyond standard first- and second-order
+initial-value problems at $t=0$.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### A Third-Order Example {#a-third-order-example-45}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Solve:
+
+$$
+y'''+y'=0,
+\qquad
+y(0)=2,
+\qquad
+y'(0)=-1,
+\qquad
+y''(0)=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The required derivative transforms are:
+
+$$
+\begin{aligned}
+\mathcal{L}\{y'''\}
+&=s^3Y-s^2y(0)-sy'(0)-y''(0),\\
+\mathcal{L}\{y'\}
+&=sY-y(0).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Substitute the three initial values into the first formula:
+
+$$
+\begin{aligned}
+\mathcal{L}\{y'''\}
+&=s^3Y-s^2(2)-s(-1)-0\\
+&=s^3Y-2s^2+s.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Substitute $y(0)=2$ into the second formula:
+
+$$
+\mathcal{L}\{y'\}=sY-2.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Insert both transformed derivatives into $y'''+y'=0$:
+
+$$
+[s^3Y-2s^2+s]+[sY-2]=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Collect the $Y$ terms:
+
+$$
+(s^3+s)Y-2s^2+s-2=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Move the remaining polynomial to the right:
+
+$$
+(s^3+s)Y=2s^2-s+2.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Factor $s^3+s=s(s^2+1)$ and divide:
+
+$$
+Y=\frac{2s^2-s+2}{s(s^2+1)}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Invert The Third-Order Transform {#invert-the-third-order-transform-46}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The numerator can be separated without a full partial-fraction calculation:
+
+$$
+2s^2-s+2=2(s^2+1)-s.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Substitute this form into $Y$:
+
+$$
+\begin{aligned}
+Y
+&=\frac{2(s^2+1)-s}{s(s^2+1)}\\
+&=\frac{2(s^2+1)}{s(s^2+1)}
+-\frac{s}{s(s^2+1)}\\
+&=\frac2s-\frac1{s^2+1}.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Invert each term:
+
+$$
+\boxed{y(t)=2-\sin t}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Check the three initial values locally:
+
+$$
+\begin{aligned}
+y(0)&=2-\sin0=2,\\
+y'(t)&=-\cos t,
+&y'(0)&=-1,\\
+y''(t)&=\sin t,
+&y''(0)&=0.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### When No Initial Values Are Given {#when-no-initial-values-are-given-47}
+
+Laplace transforms can still recover a general solution, but the values at
+$t=0$ must remain unknown.
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Consider:
+
+$$
+y''-5y'+6y=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Define:
+
+$$
+c_0=y(0),
+\qquad
+c_1=y'(0).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+These are not known numbers. Transform the equation while keeping them:
+
+$$
+[s^2Y-sc_0-c_1]-5[sY-c_0]+6Y=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Expand:
+
+$$
+s^2Y-sc_0-c_1-5sY+5c_0+6Y=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Collect $Y$ and move the initial terms to the right:
+
+$$
+(s^2-5s+6)Y=(s-5)c_0+c_1.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Factor the quadratic:
+
+$$
+Y=\frac{(s-5)c_0+c_1}{(s-2)(s-3)}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Recover The General Family {#recover-the-general-family-48}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Write:
+
+$$
+Y=\frac A{s-2}+\frac B{s-3}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Combining the right side gives:
+
+$$
+Y
+=\frac{A(s-3)+B(s-2)}{(s-2)(s-3)}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Expand the numerator:
+
+$$
+A(s-3)+B(s-2)
+=(A+B)s-(3A+2B).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Match this with the numerator already obtained:
+
+$$
+(s-5)c_0+c_1=c_0s+(c_1-5c_0).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Equating the coefficient of $s$ and the constant term gives:
+
+$$
+A+B=c_0,
+\qquad
+3A+2B=5c_0-c_1.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use $B=c_0-A$ in the second equation:
+
+$$
+\begin{aligned}
+3A+2(c_0-A)&=5c_0-c_1,\\
+A+2c_0&=5c_0-c_1,\\
+A&=3c_0-c_1.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Substituting the value of $A$ into $B=c_0-A$ gives:
+
+$$
+\begin{aligned}
+B
+&=c_0-A\\
+&=c_0-(3c_0-c_1)\\
+&=c_1-2c_0.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Invert $Y$:
+
+$$
+y(t)=(3c_0-c_1)e^{2t}+(c_1-2c_0)e^{3t}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Because $c_0$ and $c_1$ are arbitrary, the two coefficients above are also
+arbitrary. Renaming them $C_1$ and $C_2$ gives the familiar general family:
+
+$$
+\boxed{y(t)=C_1e^{2t}+C_2e^{3t}}.
+$$
+
+No initial information means that the transform method cannot select one
+member of the family.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Conditions Given Away From Zero {#conditions-given-away-from-zero-49}
+
+The standard derivative formulas naturally use values at $t=0$. When all
+conditions are prescribed at another time, a change of clock can move that
+time to zero.
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Solve:
+
+$$
+y''+4y=0,
+\qquad
+y(2)=3,
+\qquad
+y'(2)=-2.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Introduce a new time variable:
+
+$$
+x=t-2.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Define a recentered function:
+
+$$
+z(x)=y(x+2).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+When $t=2$, we have $x=0$. Therefore the given data become:
+
+$$
+z(0)=3,
+\qquad
+z'(0)=-2.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Because the equation has constant coefficients, replacing $t$ by $x$ leaves
+its form unchanged:
+
+$$
+z''+4z=0.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Solve In The Recentered Variable {#solve-in-the-recentered-variable-50}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Let $Z(s)=\mathcal{L}\{z(x)\}$. Transform the recentered equation:
+
+$$
+[s^2Z-sz(0)-z'(0)]+4Z=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Insert $z(0)=3$ and $z'(0)=-2$:
+
+$$
+[s^2Z-3s-(-2)]+4Z=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Remove the double negative and collect $Z$:
+
+$$
+(s^2+4)Z-3s+2=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Move the remaining terms to the right:
+
+$$
+(s^2+4)Z=3s-2.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Divide and separate:
+
+$$
+Z=3\frac{s}{s^2+4}-\frac2{s^2+4}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Invert in the variable $x$:
+
+$$
+z(x)=3\cos(2x)-\sin(2x).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Finally, return to $x=t-2$:
+
+$$
+\boxed{
+y(t)=3\cos(2(t-2))-\sin(2(t-2))
+}.
+$$
+
+The replacement $x=t-2$ is not the second-shifting theorem. It is a change of
+independent variable that relocates the initial time.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Block 7 Summary {#block-7-summary-51}
+
+Higher derivatives require more initial-value terms. Missing data must remain
+arbitrary, while data prescribed at a common nonzero time can often be handled
+cleanly by recentering the independent variable.
+
+```{=latex}
+\Needspace{20\baselineskip}
+```
+## A Reliable End-To-End Method {#block-8-a-reliable-end-to-end-method}
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### The Goal Of This Block {#the-goal-of-this-block-52}
+
+The goal is to choose each transform tool deliberately and to catch an
+incorrect result before moving on.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### The Full Checklist {#the-full-checklist-53}
+
+For a constant-coefficient initial-value problem:
+
+1.  Write $Y(s)=\mathcal{L}\{y(t)\}$.
+2.  Write the complete transform formula for every derivative.
+3.  Insert all data at $t=0$, preserving signs and powers of $s$.
+4.  Transform the forcing independently.
+5.  Collect every term containing $Y$ before dividing.
+6.  Isolate $Y$ completely.
+7.  Inspect the denominator and any exponential factors.
+8.  Choose partial fractions, completing the square, convolution, or time
+    translation as needed.
+9.  Invert every term.
+10. Check the initial values and the original equation.
+
+Do not combine Steps 2 through 5 mentally when learning the method. Those are
+the steps where missing initial terms and sign errors are most likely.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Let The Transform Structure Choose The Tool {#let-the-transform-structure-choose-the-tool-54}
+
+After $Y$ has been isolated, look for these signals:
+
+-   distinct linear factors suggest partial fractions
+-   a quadratic such as $(s+a)^2+b^2$ suggests shifted sine and cosine pairs
+-   a product $F(s)G(s)$ may be inverted by convolution
+-   a factor $e^{-as}$ indicates a delayed time-domain response
+-   a repeated factor may create a polynomial multiplier such as $t$
+
+The transform expression is not algebraic clutter. Its structure is a map of
+the remaining solution method.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Check Initial Values Before Differentiating Everything {#check-initial-values-before-differentiating-everything-55}
+
+Initial-value checks are usually the fastest diagnostic.
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+If a proposed solution is:
+
+$$
+y(t)=A+Be^{-2t}+C\sin(3t),
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+then:
+
+$$
+y(0)=A+B.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Differentiate once:
+
+$$
+y'(t)=-2Be^{-2t}+3C\cos(3t),
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+so:
+
+$$
+y'(0)=-2B+3C.
+$$
+
+If either value disagrees with the problem, there is no need to perform a
+long substitution into the differential equation. The answer is already
+incorrect.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Check Long-Term Behaviour {#check-long-term-behaviour-56}
+
+For a stable equation driven by a constant input, the long-term value can
+often be predicted without solving.
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+For example, in:
+
+$$
+y''+3y'+2y=4,
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+For $y''+3y'+2y=4$, a constant equilibrium has $y'=y''=0$.
+Substituting those zero derivatives leaves:
+
+$$
+2y=4,
+\qquad
+y=2.
+$$
+
+A derived solution that grows without bound or approaches a different
+constant should be rechecked.
+
+This check is qualitative; it does not replace the derivation.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Check Delays For Causality {#check-delays-for-causality-57}
+
+If the initial state is zero and the forcing begins at $t=a$, the response
+should not begin before $t=a$.
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+A correct delayed result has the form:
+
+$$
+u(t-a)f(t-a).
+$$
+
+This expression is zero for $t<a$. A formula containing $f(t-a)$ without the
+step may incorrectly predict a response before the input exists.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Common End-To-End Errors {#common-end-to-end-errors-58}
+
+Watch for:
+
+-   omitting one initial-value term from a derivative transform
+-   inserting a negative initial value without parentheses
+-   moving a term across the equals sign without changing its sign
+-   dividing only part of an equation by the coefficient of $Y$
+-   using partial fractions before $Y$ has been isolated
+-   treating $e^{-as}$ as an ordinary scalar rather than a delay
+-   failing to shift the internal time argument when applying a delay
+-   applying conditions at $t=a$ directly to formulas built around $t=0$
+-   presenting an inverse transform without checking the original data
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Block 8 Summary {#block-8-summary-59}
+
+The Laplace method is reliable when each representation change is explicit:
+derivatives become algebraic expressions, the transformed equation is solved
+for $Y$, and transform structure determines the inversion method. Initial,
+long-term, and causality checks provide fast independent evidence.
+
+```{=latex}
+\Needspace{20\baselineskip}
+```
+## Original Practice Set {#block-9-original-practice-set}
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Problems 1 To 4: Derivatives And First Order {#problems-1-to-4-derivatives-and-first-order-60}
+
+#### Problem 1: Transform A Third Derivative
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Given:
+
+$$
+y(0)=2,
+\qquad
+y'(0)=-1,
+\qquad
+y''(0)=4,
+$$
+
+write $\mathcal{L}\{y'''(t)\}$ in terms of $Y(s)$.
+
+#### Problem 2: Diagnose A Missing Initial Term
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+A learner writes:
+
+$$
+\mathcal{L}\{y''\}=s^2Y-y'(0).
+$$
+
+Identify the missing term and give the correct formula.
+
+#### Problem 3: Solve A First-Order Decay Problem
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use Laplace transforms to solve:
+
+$$
+y'+4y=0,
+\qquad
+y(0)=-2.
+$$
+
+#### Problem 4: Solve A First-Order Forced Problem
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use Laplace transforms to solve:
+
+$$
+y'+3y=9,
+\qquad
+y(0)=1.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Problems 5 To 8: Second Order And Forcing {#problems-5-to-8-second-order-and-forcing-61}
+
+#### Problem 5: Solve A Homogeneous Second-Order Problem
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use Laplace transforms to solve:
+
+$$
+y''+5y'+6y=0,
+\qquad
+y(0)=2,
+\qquad
+y'(0)=-1.
+$$
+
+#### Problem 6: Solve A Constant-Forced Oscillator
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use Laplace transforms to solve:
+
+$$
+y''+4y=8,
+\qquad
+y(0)=0,
+\qquad
+y'(0)=0.
+$$
+
+#### Problem 7: Handle A Delayed Input
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use Laplace transforms to solve:
+
+$$
+y'+2y=u(t-1),
+\qquad
+y(0)=0.
+$$
+
+#### Problem 8: Solve A Resonant Cosine Problem
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use Laplace transforms to solve:
+
+$$
+y''+16y=\cos(4t),
+\qquad
+y(0)=0,
+\qquad
+y'(0)=0.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Problems 9 To 12: Structural And Higher-Order Cases {#problems-9-to-12-structural-and-higher-order-cases-62}
+
+#### Problem 9: Leave The Forcing Unspecified
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+For:
+
+$$
+y''+9y=f(t),
+\qquad
+y(0)=0,
+\qquad
+y'(0)=0,
+$$
+
+express the solution as a convolution involving $f$.
+
+#### Problem 10: Solve A Third-Order Problem
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use Laplace transforms to solve:
+
+$$
+y'''+y'=0,
+\qquad
+y(0)=1,
+\qquad
+y'(0)=0,
+\qquad
+y''(0)=-2.
+$$
+
+#### Problem 11: Recenter Nonzero-Time Data
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use a recentered time variable and Laplace transforms to solve:
+
+$$
+y'+2y=0,
+\qquad
+y(3)=5.
+$$
+
+#### Problem 12: Recover A Family Without Initial Data
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use Laplace transforms, keeping $c_0=y(0)$ and $c_1=y'(0)$ arbitrary, to
+solve:
+
+$$
+y''-y=0.
+$$
+
+```{=latex}
+\clearpage
+```
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Worked Answers: Problems 1 To 4 {#worked-answers-problems-1-to-4-63}
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+#### Answer 1
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Start from the third-derivative formula:
+
+$$
+\mathcal{L}\{y'''\}
+=s^3Y-s^2y(0)-sy'(0)-y''(0).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Substitute $y(0)=2$, $y'(0)=-1$, and $y''(0)=4$:
+
+$$
+\begin{aligned}
+\mathcal{L}\{y'''\}
+&=s^3Y-s^2(2)-s(-1)-4\\
+&=\boxed{s^3Y-2s^2+s-4}.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+#### Answer 2
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The missing term is $-sy(0)$. A second derivative needs both $y(0)$ and
+$y'(0)$:
+
+$$
+\boxed{
+\mathcal{L}\{y''\}
+=s^2Y-sy(0)-y'(0)
+}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+#### Answer 3
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Transform $y'+4y=0$ using $\mathcal{L}\{y'\}=sY-y(0)$:
+
+$$
+[sY-y(0)]+4Y=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Insert $y(0)=-2$:
+
+$$
+sY-(-2)+4Y=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Remove the double negative, collect $Y$, and solve:
+
+$$
+\begin{aligned}
+(s+4)Y+2&=0,\\
+(s+4)Y&=-2,\\
+Y&=-\frac2{s+4}.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Invert:
+
+$$
+\boxed{y(t)=-2e^{-4t}}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+#### Answer 4
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Transform $y'+3y=9$:
+
+$$
+[sY-y(0)]+3Y=\frac9s.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Insert $y(0)=1$ and collect $Y$:
+
+$$
+(s+3)Y-1=\frac9s.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Add $1$ to both sides and combine the right side:
+
+$$
+\begin{aligned}
+(s+3)Y
+&=\frac9s+1\\
+&=\frac{s+9}{s}.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Divide by $s+3$:
+
+$$
+Y=\frac{s+9}{s(s+3)}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use $Y=A/s+B/(s+3)$. Multiplying by $s(s+3)$ gives:
+
+$$
+s+9=A(s+3)+Bs.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Set $s=0$ to obtain $9=3A$, so $A=3$. Set $s=-3$ to obtain
+$6=-3B$, so $B=-2$. Substituting both constants gives:
+
+$$
+Y=\frac3s-\frac2{s+3}.
+$$
+
+```{=latex}
+\clearpage
+```
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Invert:
+
+$$
+\boxed{y(t)=3-2e^{-3t}}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Worked Answers: Problems 5 To 8 {#worked-answers-problems-5-to-8-64}
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+#### Answer 5
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Transform the equation using both derivative formulas:
+
+$$
+[s^2Y-sy(0)-y'(0)]
++5[sY-y(0)]
++6Y=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Insert $y(0)=2$ and $y'(0)=-1$:
+
+$$
+[s^2Y-2s-(-1)]+5[sY-2]+6Y=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Remove the double negative and expand:
+
+$$
+s^2Y-2s+1+5sY-10+6Y=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Collect $Y$ and move the remaining terms to the right:
+
+$$
+(s^2+5s+6)Y=2s+9.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Factor and divide:
+
+$$
+Y=\frac{2s+9}{(s+2)(s+3)}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use $Y=A/(s+2)+B/(s+3)$:
+
+$$
+2s+9=A(s+3)+B(s+2).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Set $s=-2$:
+
+$$
+5=A,
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+and set $s=-3$:
+
+$$
+3=-B,
+\qquad
+B=-3.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Inverting the two partial-fraction terms gives:
+
+$$
+\boxed{y(t)=5e^{-2t}-3e^{-3t}}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+#### Answer 6
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Transform the equation and insert the zero initial values:
+
+$$
+(s^2+4)Y=\frac8s.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Solve for $Y$:
+
+$$
+Y=\frac8{s(s^2+4)}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use the form:
+
+$$
+\frac8{s(s^2+4)}=\frac As+\frac{Bs}{s^2+4}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Multiplying by $s(s^2+4)$ gives:
+
+$$
+8=A(s^2+4)+Bs^2.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Match the constant term and the coefficient of $s^2$:
+
+$$
+4A=8,
+\qquad
+A+B=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Therefore $A=2$ and $B=-2$, so:
+
+$$
+Y=\frac2s-2\frac{s}{s^2+4}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Invert:
+
+$$
+\boxed{y(t)=2-2\cos(2t)}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+#### Answer 7
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Transform the equation:
+
+$$
+[sY-y(0)]+2Y=\frac{e^{-s}}s.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Insert $y(0)=0$ and solve for $Y$:
+
+$$
+Y=e^{-s}\frac1{s(s+2)}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Prepare the undelayed factor:
+
+$$
+\frac1{s(s+2)}
+=\frac12\left(\frac1s-\frac1{s+2}\right).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Its inverse is:
+
+$$
+f(t)=\frac12(1-e^{-2t}).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Apply the delay $a=1$ to the complete function:
+
+$$
+\boxed{
+y(t)=\frac12u(t-1)\left[1-e^{-2(t-1)}\right]
+}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+#### Answer 8
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Transform the equation with zero initial values:
+
+$$
+(s^2+16)Y=\frac{s}{s^2+16}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Divide by $s^2+16$:
+
+$$
+Y=\frac{s}{(s^2+16)^2}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use the transform-differentiation property:
+
+$$
+\mathcal{L}\{tf(t)\}=-\frac{d}{ds}F(s).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+For $f(t)=(1/4)\sin(4t)$, we have $F(s)=1/(s^2+16)$. Differentiate:
+
+$$
+-\frac{d}{ds}\left(\frac1{s^2+16}\right)
+=\frac{2s}{(s^2+16)^2}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Applying the transform-differentiation property to this derivative gives:
+
+$$
+\mathcal{L}\left\{\frac t4\sin(4t)\right\}
+=\frac{2s}{(s^2+16)^2}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Divide both sides by $2$ to match $Y$:
+
+$$
+\boxed{y(t)=\frac t8\sin(4t)}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Worked Answers: Problems 9 To 12 {#worked-answers-problems-9-to-12-65}
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+#### Answer 9
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Let $F(s)=\mathcal{L}\{f(t)\}$. Transform the equation with zero initial
+values:
+
+$$
+(s^2+9)Y=F(s).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Solve for $Y$:
+
+$$
+Y=F(s)\frac1{s^2+9}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Since:
+
+$$
+\frac1{s^2+9}\longleftrightarrow\frac13\sin(3t),
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+the product becomes a convolution:
+
+$$
+\boxed{
+y(t)=\frac13\int_0^t\sin(3(t-\tau))f(\tau)\,d\tau
+}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+#### Answer 10
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use:
+
+$$
+\begin{aligned}
+\mathcal{L}\{y'''\}
+&=s^3Y-s^2y(0)-sy'(0)-y''(0),\\
+\mathcal{L}\{y'\}
+&=sY-y(0).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Insert $y(0)=1$, $y'(0)=0$, and $y''(0)=-2$:
+
+$$
+[s^3Y-s^2-s(0)-(-2)]+[sY-1]=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Simplify and collect $Y$:
+
+$$
+(s^3+s)Y-s^2+1=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Move the polynomial to the right and factor:
+
+$$
+Y=\frac{s^2-1}{s(s^2+1)}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Write:
+
+$$
+\frac{s^2-1}{s(s^2+1)}
+=-\frac1s+2\frac{s}{s^2+1}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Invert:
+
+$$
+\boxed{y(t)=-1+2\cos t}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+#### Answer 11
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Recenter time at $t=3$:
+
+$$
+x=t-3,
+\qquad
+z(x)=y(x+3).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Then $z(0)=5$, and the equation becomes:
+
+$$
+z'+2z=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Let $Z(s)=\mathcal{L}\{z(x)\}$. Transform and insert $z(0)=5$:
+
+$$
+[sZ-5]+2Z=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Collect and solve:
+
+$$
+Z=\frac5{s+2}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Invert in $x$:
+
+$$
+z(x)=5e^{-2x}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Return to $x=t-3$:
+
+$$
+\boxed{y(t)=5e^{-2(t-3)}}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+#### Answer 12
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Keep:
+
+$$
+c_0=y(0),
+\qquad
+c_1=y'(0)
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+arbitrary. Transform $y''-y=0$:
+
+$$
+[s^2Y-sc_0-c_1]-Y=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Collect $Y$ and move the initial terms to the right:
+
+$$
+(s^2-1)Y=sc_0+c_1.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Divide and separate the two terms:
+
+$$
+Y
+=c_0\frac{s}{s^2-1}
++c_1\frac1{s^2-1}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use:
+
+$$
+\frac{s}{s^2-1}\longleftrightarrow\cosh t,
+\qquad
+\frac1{s^2-1}\longleftrightarrow\sinh t.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Inverting the two transform pairs gives:
+
+$$
+y(t)=c_0\cosh t+c_1\sinh t.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Because $c_0$ and $c_1$ are arbitrary, this is the two-parameter solution
+family. Equivalently:
+
+$$
+\boxed{y(t)=C_1e^t+C_2e^{-t}}.
+$$
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### Chapter 24 Final Summary {#chapter-24-final-summary-66}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The essential derivative formulas are:
+
+$$
+\begin{aligned}
+\mathcal{L}\{y'\}
+&=sY-y(0),\\
+\mathcal{L}\{y''\}
+&=s^2Y-sy(0)-y'(0),\\
+\mathcal{L}\{y^{(n)}\}
+&=s^nY-s^{n-1}y(0)-\cdots-y^{(n-1)}(0).
+\end{aligned}
+$$
+
+For a constant-coefficient initial-value problem, transform every term,
+insert the data, isolate $Y(s)$, prepare the result for inversion, and verify
+the time-domain function.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+Partial fractions, completing the square, convolution, and time translation
+are not separate topics at this stage. They are the inversion tools selected
+by the structure of $Y(s)$.
+
+```{=latex}
+\Needspace{8\baselineskip}
+```
+> the Laplace transform carries the differential equation and its initial
+> data into one algebraic equation; the quality of the solution depends on
+> making every term in that translation visible.
