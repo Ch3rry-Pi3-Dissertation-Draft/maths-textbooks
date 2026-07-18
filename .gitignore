@@ -1,0 +1,21 @@
+# External reference textbooks are not project-authored artifacts.
+documents/
+
+# Local Codex state.
+.agents/
+.codex/
+
+# Operating-system and editor metadata.
+*:Zone.Identifier
+.DS_Store
+Thumbs.db
+*~
+*.swp
+
+# LaTeX intermediate files.
+*.aux
+*.log
+*.out
+*.toc
+*.xdv
+*.synctex.gz
