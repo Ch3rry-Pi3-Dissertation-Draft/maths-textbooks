@@ -29,10 +29,6 @@ The main questions are:
 -   what changes for first-order and higher-order equations?
 -   when is variation of parameters theoretically valid but practically awkward?
 
-All examples, equations, and exercises in this chapter are independently
-constructed. The reference text is used only to identify the mathematical
-topics.
-
 ```{=latex}
 \Needspace{20\baselineskip}
 ```

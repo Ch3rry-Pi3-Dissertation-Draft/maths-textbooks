@@ -27,10 +27,6 @@ The main questions are:
 -   what do eigenvalues and eigenvectors say about a matrix?
 -   how does the Cayley-Hamilton theorem reduce high matrix powers?
 
-All examples, equations, and exercises in this chapter are independently
-constructed. The reference text is used only to identify the mathematical
-topics.
-
 ```{=latex}
 \Needspace{20\baselineskip}
 ```

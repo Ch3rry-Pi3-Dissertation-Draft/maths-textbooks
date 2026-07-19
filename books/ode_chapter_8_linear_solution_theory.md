@@ -23,9 +23,6 @@ The chapter's organising idea is:
 > linearity makes the solution set predictable: homogeneous solutions form a
 > space of reusable directions, and forcing shifts that space to a new family.
 
-All examples, data, and exercises are independently constructed. The reference
-text is used only to identify the mathematical topics.
-
 ---
 
 ## Block 1: Recognising A Linear Equation Of Any Order

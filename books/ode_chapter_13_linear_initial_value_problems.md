@@ -27,10 +27,6 @@ The guiding rule is:
 > and only then use all initial conditions to determine its arbitrary
 > constants.
 
-All examples, equations, and exercises in this chapter are independently
-constructed. The reference text is used only to identify the mathematical
-topics.
-
 ---
 
 ## Block 1: What An Initial-Value Problem Adds

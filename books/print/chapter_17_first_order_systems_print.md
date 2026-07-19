@@ -26,9 +26,6 @@ The main questions are:
 -   how can the matrix system be checked against the original equations?
 -   when can Chapter 16's matrix exponential solve the converted system?
 
-All worked examples and exercises are independently constructed. The reference
-text is used only as a map of the mathematical topics.
-
 ```{=latex}
 \Needspace{20\baselineskip}
 ```

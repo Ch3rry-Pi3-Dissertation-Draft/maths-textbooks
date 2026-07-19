@@ -29,9 +29,7 @@ We will learn to:
 -   decompose rational functions using partial fractions
 -   verify a reconstructed function by transforming it forward again
 
-Convolutions and unit-step translations begin in Chapter 23. The examples,
-figures, derivations, and exercises here are independently constructed; the
-reference chapter is used only as a topic map.
+Convolutions and unit-step translations begin in Chapter 23.
 
 ```{=latex}
 \Needspace{20\baselineskip}

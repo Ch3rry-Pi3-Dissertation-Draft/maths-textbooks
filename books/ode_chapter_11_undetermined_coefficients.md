@@ -21,10 +21,6 @@ The main questions are:
 - what changes when the first trial overlaps the homogeneous solution?
 - when is this method unavailable?
 
-All examples, equations, and exercises in this chapter are independently
-constructed. The reference text is used only to identify the mathematical
-topics.
-
 ---
 
 ## Block 1: From A Homogeneous Family To A Forced Solution

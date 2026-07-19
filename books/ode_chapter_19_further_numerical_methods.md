@@ -37,9 +37,6 @@ The main questions are:
 - what can a large predictor--corrector gap warn us about?
 - how should accuracy, stability, storage, and computational cost be balanced?
 
-The figures, examples, numerical data, and exercises are independently
-constructed. The reference text is used only as a map of the standard methods.
-
 ---
 
 ## Block 1: From One Slope To Several Slopes

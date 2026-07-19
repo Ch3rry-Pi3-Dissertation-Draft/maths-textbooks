@@ -43,10 +43,6 @@ The main questions are:
 -   how does an RLC circuit produce the same differential-equation structure?
 -   how does Archimedes' principle create a buoyant restoring force?
 
-All examples, equations, and exercises in this chapter are independently
-constructed. The reference text is used only to identify the mathematical
-topics.
-
 ```{=latex}
 \Needspace{20\baselineskip}
 ```

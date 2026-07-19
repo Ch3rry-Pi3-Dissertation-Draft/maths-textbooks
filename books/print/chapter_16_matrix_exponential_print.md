@@ -33,10 +33,6 @@ The main questions are:
 -   how do complex eigenvalues produce real sine and cosine entries?
 -   which familiar exponential laws remain valid for matrices?
 
-All examples, equations, and exercises in this chapter are independently
-constructed. The reference text is used only to identify the mathematical
-topics.
-
 ```{=latex}
 \Needspace{20\baselineskip}
 ```

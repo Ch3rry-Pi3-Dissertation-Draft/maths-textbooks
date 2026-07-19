@@ -24,9 +24,6 @@ This chapter will:
 -   explain what changes when initial information is missing or given away from
     $t=0$
 
-Every worked example and exercise is independently constructed. The reference
-chapter is used only to identify the mathematical topics that belong here.
-
 ```{=latex}
 \Needspace{20\baselineskip}
 ```

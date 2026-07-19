@@ -18,9 +18,7 @@ This chapter develops the **forward** transform. We will:
 - use linearity, shifting, differentiation, scaling, and division properties
 - transform finite piecewise and periodic functions
 
-Inverse transforms begin in Chapter 22. The examples, figures, derivations,
-and exercises here are independently constructed; the reference chapter is
-used only as a topic map.
+Inverse transforms begin in Chapter 22.
 
 ---
 

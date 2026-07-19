@@ -22,9 +22,6 @@ convolutions directly, invert products, and solve convolution-type integral
 equations. Transforming derivatives and solving differential-equation
 initial-value problems begins in Chapter 24.
 
-The examples, figures, derivations, and exercises here are independently
-constructed; the reference chapter is used only as a topic map.
-
 ```{=latex}
 \Needspace{20\baselineskip}
 ```

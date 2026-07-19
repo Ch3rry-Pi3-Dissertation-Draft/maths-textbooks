@@ -44,9 +44,6 @@ The chapter's organising idea is:
 > equation; the general solution combines those modes, and initial data choose
 > the required combination.
 
-All examples, data, explanations, and exercises are independently constructed.
-The reference text is used only to identify the mathematical topics.
-
 ```{=latex}
 \Needspace{20\baselineskip}
 ```

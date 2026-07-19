@@ -22,9 +22,6 @@ This chapter develops that extension carefully. We will:
 -   connect the scalar calculations with the matrix expression
     $(sI-A)\mathbf{X}=\mathbf{x}_0+\mathbf{F}$
 
-The examples, figures, and exercises are independently designed. The
-reference chapter is used only as a topic map.
-
 ```{=latex}
 \Needspace{20\baselineskip}
 ```

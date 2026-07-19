@@ -28,9 +28,7 @@ The two unknowns will usually be:
 -   $v(x)=y'(x)$, the velocity-like state
 
 We will adapt Euler, classical RK4, Adams--Bashforth--Moulton, and Milne's
-method to this paired system. The figures, examples, numerical data, and
-exercises are independently constructed. The reference text is used only as a
-map of the standard methods.
+method to this paired system.
 
 ```{=latex}
 \Needspace{20\baselineskip}

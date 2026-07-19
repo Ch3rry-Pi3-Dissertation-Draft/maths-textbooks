@@ -28,9 +28,6 @@ The chapter's organising idea is:
 > functions, then count those functions until the differential equation's
 > order has been matched.
 
-All examples, data, and exercises are independently constructed. The reference
-text is used only to identify the mathematical topics.
-
 ---
 
 ## Block 1: Extending The Characteristic Equation To Order $n$

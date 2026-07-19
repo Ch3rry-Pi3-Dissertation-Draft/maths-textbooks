@@ -25,10 +25,6 @@ The main questions are:
 - how can a large step size create numerical behavior that the true solution
   does not have?
 
-The three figures and all worked examples and exercises in this chapter are
-independently constructed. The reference text is used only to identify the
-mathematical topics.
-
 ---
 
 ## Block 1: Reading A Differential Equation As A Slope Rule

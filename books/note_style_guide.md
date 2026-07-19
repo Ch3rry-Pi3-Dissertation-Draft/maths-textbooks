@@ -20,7 +20,7 @@ Start every note with one level-one title:
 
 Follow the title with a short introduction that answers:
 
-- what source material the note covers
+- what mathematical topic the note covers
 - what the reader is expected to learn
 - how the topic connects to what came before or what comes next
 
@@ -520,6 +520,13 @@ $y'$ is a derivative and why $y^{(4)}$ is not the fourth power of $y$.
 ## 8. Relationship To Source Material
 
 Treat source material as a **topic map**, not as a manuscript template.
+
+This is an internal drafting rule. Never mention a reference textbook,
+reference chapter, source text, topic map, originality audit, or independent
+construction process in the reader-facing chapter. Do not add disclaimers such
+as “the reference text is used only to identify the mathematical topics.” The
+finished chapter must read as a self-contained work, without commentary about
+how it was researched or drafted.
 
 The source may help identify:
 
