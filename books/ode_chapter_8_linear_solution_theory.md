@@ -1455,6 +1455,72 @@ on every real interval.
 </details>
 
 <details open>
+<summary><strong>Worked Two-Function Dependent Example</strong></summary>
+
+Now consider the pair:
+
+$$
+y_1=e^x,
+\qquad
+y_2=4e^x.
+$$
+
+Before calculating anything, notice that the second function is a constant
+multiple of the first:
+
+$$
+y_2=4y_1.
+$$
+
+We will now see how that repeated direction appears in the Wronskian.
+
+First calculate the derivatives:
+
+$$
+y_1'=e^x,
+\qquad
+y_2'=4e^x.
+$$
+
+Insert the functions and their derivatives into the determinant:
+
+$$
+W[y_1,y_2]
+=
+\begin{vmatrix}
+e^x & 4e^x \\
+e^x & 4e^x
+\end{vmatrix}.
+$$
+
+Expand the $2\times2$ determinant:
+
+$$
+\begin{aligned}
+W[y_1,y_2]
+&=e^x(4e^x)-(4e^x)(e^x) \\
+&=4e^{2x}-4e^{2x} \\
+&=0.
+\end{aligned}
+$$
+
+The Wronskian is therefore zero for every real $x$. The cancellation occurs
+because the second column of the determinant is four times the first column.
+
+For arbitrary functions, a zero Wronskian on its own is not always enough to
+prove dependence. In this example, however, we can verify the dependence
+directly by rearranging $y_2=4y_1$:
+
+$$
+4y_1-y_2=0.
+$$
+
+The coefficients $4$ and $-1$ are constants and are not both zero. Therefore
+$e^x$ and $4e^x$ are linearly dependent on every real interval.
+
+</details>
+
+<details open>
 <summary><strong>The Wronskian For Three Functions</strong></summary>
 
 For three twice-differentiable functions:
@@ -1653,47 +1719,232 @@ $$
 
 where $p$ and $q$ are continuous on an interval $I$.
 
-For two solutions $y_1,y_2$ of $y''+py'+qy=0$, their Wronskian is:
+The aim is to show that the Wronskian obeys its own first-order differential
+equation. Once that equation is known, the value of the Wronskian at one point
+will control its value throughout the interval.
+
+Because both functions solve this equation, substituting $y_1$ and $y_2$
+separately gives:
+
+$$
+\begin{aligned}
+y_1''+p(x)y_1'+q(x)y_1&=0, \\
+y_2''+p(x)y_2'+q(x)y_2&=0.
+\end{aligned}
+$$
+
+Solving each equation for its second derivative gives the two substitutions
+we will need later:
+
+$$
+\begin{aligned}
+y_1''&=-p(x)y_1'-q(x)y_1, \\
+y_2''&=-p(x)y_2'-q(x)y_2.
+\end{aligned}
+$$
+
+Now write the Wronskian of the two functions:
 
 $$
 W=y_1y_2'-y_2y_1'.
 $$
 
-Differentiate it:
+Differentiate both products using the product rule. For the first product:
+
+$$
+(y_1y_2')'=y_1'y_2'+y_1y_2'',
+$$
+
+and for the second product:
+
+$$
+(y_2y_1')'=y_2'y_1'+y_2y_1''.
+$$
+
+Therefore:
 
 $$
 \begin{aligned}
 W'
-&=y_1'y_2'+y_1y_2''-y_2'y_1'-y_2y_1'' \\
-&=y_1y_2''-y_2y_1''.
+&=(y_1y_2')'-(y_2y_1')' \\
+&=\left(y_1'y_2'+y_1y_2''\right)
+-\left(y_2'y_1'+y_2y_1''\right) \\
+&=y_1'y_2'+y_1y_2''-y_2'y_1'-y_2y_1''.
 \end{aligned}
 $$
 
-Because each function solves the differential equation:
+The first and third terms cancel because multiplication is commutative:
 
 $$
-y_i''=-p(x)y_i'-q(x)y_i.
+y_1'y_2'=y_2'y_1'.
 $$
 
-Substitute the two second derivatives:
+This leaves:
+
+$$
+W'=y_1y_2''-y_2y_1''.
+$$
+
+Now substitute the two second-derivative formulas found earlier:
 
 $$
 \begin{aligned}
 W'
-&=y_1(-py_2'-qy_2)-y_2(-py_1'-qy_1) \\
-&=-py_1y_2'-qy_1y_2+py_2y_1'+qy_2y_1 \\
-&=-p(y_1y_2'-y_2y_1') \\
-&=-pW.
+&=y_1\left[-p(x)y_2'-q(x)y_2\right]
+-y_2\left[-p(x)y_1'-q(x)y_1\right].
 \end{aligned}
 $$
 
-So the Wronskian itself satisfies:
+Distribute $y_1$ and $-y_2$ across the brackets:
 
 $$
-W'=-pW.
+\begin{aligned}
+W'
+={}&-p(x)y_1y_2'-q(x)y_1y_2 \\
+&\quad +p(x)y_2y_1'+q(x)y_2y_1.
+\end{aligned}
 $$
 
-Solving this first-order equation gives Abel's identity:
+The two terms containing $q(x)$ cancel because $y_1y_2=y_2y_1$:
+
+$$
+-q(x)y_1y_2+q(x)y_2y_1=0.
+$$
+
+Therefore:
+
+$$
+\begin{aligned}
+W'
+&=-p(x)y_1y_2'+p(x)y_2y_1' \\
+&=-p(x)\left(y_1y_2'-y_2y_1'\right).
+\end{aligned}
+$$
+
+The expression in parentheses is the original Wronskian $W$. Hence the
+Wronskian itself satisfies the first-order equation:
+
+$$
+W'=-p(x)W.
+$$
+
+To solve it, first move the right side to the left:
+
+$$
+W'+p(x)W=0.
+$$
+
+The next goal is to turn the entire left side into the derivative of one
+product. Introduce a function $\mu(x)$ and imagine multiplying the equation by
+it:
+
+$$
+\mu W'+\mu p(x)W=0.
+$$
+
+The product rule says:
+
+$$
+(\mu W)'=\mu W'+\mu'W.
+$$
+
+The first term already matches. For the second terms to match as well, choose
+$\mu$ so that:
+
+$$
+\mu'=p(x)\mu.
+$$
+
+We now need a function with exactly this derivative property. Define:
+
+$$
+A(x)=\int_{x_0}^{x}p(s)\,ds.
+$$
+
+Here $s$ is only a placeholder inside the integral. By the Fundamental
+Theorem of Calculus:[^moving-upper-limit]
+
+$$
+A'(x)=p(x).
+$$
+
+[^moving-upper-limit]: If the upper limit moves from $x$ to $x+h$, the added
+    interval has width $h$ and height approximately $p(x)$. Hence
+    $A(x+h)-A(x)\approx p(x)h$, so
+    $(A(x+h)-A(x))/h\approx p(x)$. Taking the limit as $h\to0$ gives
+    $A'(x)=p(x)$.
+
+Now define the **integrating factor** by:
+
+$$
+\mu(x)=e^{A(x)}
+=\exp\left(\int_{x_0}^{x}p(s)\,ds\right).
+$$
+
+Differentiate $\mu$ using the chain rule:
+
+$$
+\begin{aligned}
+\mu'(x)
+&=e^{A(x)}A'(x) \\
+&=e^{A(x)}p(x) \\
+&=p(x)\mu(x).
+\end{aligned}
+$$
+
+Thus this choice of $\mu$ has exactly the property we required.
+
+Now multiply the original equation $W'+p(x)W=0$ by $\mu(x)$:
+
+$$
+\mu\left(W'+p(x)W\right)=0.
+$$
+
+Expand the left side:
+
+$$
+\mu W'+\mu p(x)W=0.
+$$
+
+Replace $\mu p(x)$ by $\mu'$, since $\mu'=p(x)\mu$:
+
+$$
+\mu W'+\mu'W=0.
+$$
+
+This left side is now the product-rule expansion we wanted:
+
+$$
+\mu W'+\mu'W=(\mu W)'.
+$$
+
+Therefore the differential equation becomes:
+
+$$
+(\mu W)'=0.
+$$
+
+A function with zero derivative is constant, so compare its value at $x$ with
+its value at the chosen point $x_0$:
+
+$$
+\mu(x)W(x)=\mu(x_0)W(x_0).
+$$
+
+At $x=x_0$, the integral in $\mu$ has equal limits. It is zero, so:
+
+$$
+\mu(x_0)=e^0=1.
+$$
+
+Consequently:
+
+$$
+W(x)=\frac{W(x_0)}{\mu(x)}.
+$$
+
+Substitute the definition of $\mu(x)$ and move the reciprocal into the
+exponent. This gives **Abel's identity**:
 
 $$
 \boxed{
@@ -1709,6 +1960,54 @@ The exponential factor is never zero. Therefore:
 
 For solutions of the same regular equation, the Wronskian cannot vanish at an
 isolated point and then recover.
+
+There is one final link to make. Suppose $W(x_0)=0$. At $x_0$, the Wronskian
+matrix is:
+
+$$
+\begin{pmatrix}
+y_1(x_0) & y_2(x_0) \\
+y_1'(x_0) & y_2'(x_0)
+\end{pmatrix}.
+$$
+
+Its determinant is zero, so the matrix is singular. Therefore there are
+constants $c_1$ and $c_2$, not both zero, such that:
+
+$$
+\begin{aligned}
+c_1y_1(x_0)+c_2y_2(x_0)&=0, \\
+c_1y_1'(x_0)+c_2y_2'(x_0)&=0.
+\end{aligned}
+$$
+
+Define a new function by combining the two solutions:
+
+$$
+z=c_1y_1+c_2y_2.
+$$
+
+Because the original equation is linear and homogeneous, $z$ is also a
+solution. The two equations above say that its initial data are:
+
+$$
+z(x_0)=0,
+\qquad
+z'(x_0)=0.
+$$
+
+The zero function solves the same equation with the same initial data. Since
+the equation is regular, the uniqueness theorem says there can be only one
+such solution. Hence:
+
+$$
+z(x)=c_1y_1(x)+c_2y_2(x)=0
+\qquad\text{for every }x\in I.
+$$
+
+The constants are not both zero, so this is precisely a linear-dependence
+relation. This is why an identically zero Wronskian does prove dependence when
+the functions are solutions of the same regular homogeneous equation.
 
 </details>
 
@@ -2007,12 +2306,18 @@ This links three ideas:
 
 $$
 \boxed{
+\begin{gathered}
 \text{nonzero Wronskian}
+\\
 \Longleftrightarrow
+\\
 \text{independent solution directions}
+\\
 \Longleftrightarrow
+\\
 \text{unique coordinates from initial data}
-}.
+\end{gathered}
+}
 $$
 
 </details>
@@ -2117,14 +2422,21 @@ $$
 L[y]=f(x),
 $$
 
-For $L[y]=f(x)$, the forcing is $f(x)$ and the **associated homogeneous
-equation** is:
+the right side $f(x)$ is the forcing. Setting the forcing equal to zero gives
+the **associated homogeneous equation**:
 
 $$
 L[y]=0.
 $$
 
-Let $y_h$ denote the general solution of the homogeneous equation.
+Let $y_h$ denote the general solution of this homogeneous equation. Therefore:
+
+$$
+L[y_h]=0.
+$$
+
+Because $y_h$ is the general homogeneous solution, it usually contains the
+full set of arbitrary constants needed for the order of the equation.
 
 A **particular solution** $y_p$ is one specific function satisfying:
 
@@ -2132,8 +2444,8 @@ $$
 L[y_p]=f(x).
 $$
 
-It contains no arbitrary constants when we use it as the chosen representative
-of the forced response.
+Unlike $y_h$, the chosen $y_p$ contains no arbitrary constants. It is one fixed
+representative of the forced response.
 
 </details>
 
@@ -2149,7 +2461,7 @@ $$
 and:
 
 $$
-L[y_p]=f.
+L[y_p]=f(x).
 $$
 
 Apply the linear operator to their sum:
@@ -2158,12 +2470,12 @@ $$
 \begin{aligned}
 L[y_h+y_p]
 &=L[y_h]+L[y_p] \\
-&=0+f \\
-&=f.
+&=0+f(x) \\
+&=f(x).
 \end{aligned}
 $$
 
-Since $L[y_h+y_p]=0+f=f$, every function of the form:
+Since $L[y_h+y_p]=f(x)$, every function of the form:
 
 $$
 y=y_h+y_p
@@ -2181,13 +2493,13 @@ It remains to show that no nonhomogeneous solutions are missing.
 Let $y$ be any solution of:
 
 $$
-L[y]=f,
+L[y]=f(x),
 $$
 
 and let $y_p$ be one chosen particular solution:
 
 $$
-L[y_p]=f.
+L[y_p]=f(x).
 $$
 
 Define their difference:
@@ -2203,7 +2515,7 @@ $$
 L[z]
 &=L[y-y_p] \\
 &=L[y]-L[y_p] \\
-&=f-f \\
+&=f(x)-f(x) \\
 &=0.
 \end{aligned}
 $$

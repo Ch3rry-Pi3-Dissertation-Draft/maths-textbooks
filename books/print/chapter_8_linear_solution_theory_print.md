@@ -1840,7 +1840,91 @@ on every real interval.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### The Wronskian For Three Functions {#the-wronskian-for-three-functions-41}
+### Worked Two-Function Dependent Example {#worked-two-function-dependent-example-41}
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Now consider the pair:
+
+$$
+y_1=e^x,
+\qquad
+y_2=4e^x.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Before calculating anything, notice that the second function is a constant
+multiple of the first:
+
+$$
+y_2=4y_1.
+$$
+
+We will now see how that repeated direction appears in the Wronskian.
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+First calculate the derivatives:
+
+$$
+y_1'=e^x,
+\qquad
+y_2'=4e^x.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Insert the functions and their derivatives into the determinant:
+
+$$
+W[y_1,y_2]
+=
+\begin{vmatrix}
+e^x & 4e^x \\
+e^x & 4e^x
+\end{vmatrix}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Expand the $2\times2$ determinant:
+
+$$
+\begin{aligned}
+W[y_1,y_2]
+&=e^x(4e^x)-(4e^x)(e^x) \\
+&=4e^{2x}-4e^{2x} \\
+&=0.
+\end{aligned}
+$$
+
+The Wronskian is therefore zero for every real $x$. The cancellation occurs
+because the second column of the determinant is four times the first column.
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+For arbitrary functions, a zero Wronskian on its own is not always enough to
+prove dependence. In this example, however, we can verify the dependence
+directly by rearranging $y_2=4y_1$:
+
+$$
+4y_1-y_2=0.
+$$
+
+The coefficients $4$ and $-1$ are constants and are not both zero. Therefore
+$e^x$ and $4e^x$ are linearly dependent on every real interval.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+### The Wronskian For Three Functions {#the-wronskian-for-three-functions-42}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -1866,7 +1950,7 @@ The rows track derivative order. The columns track the individual functions.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Worked Three-Function Calculation {#worked-three-function-calculation-42}
+### Worked Three-Function Calculation {#worked-three-function-calculation-43}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -1931,7 +2015,7 @@ interval.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Why One Nonzero Value Is Enough {#why-one-nonzero-value-is-enough-43}
+### Why One Nonzero Value Is Enough {#why-one-nonzero-value-is-enough-44}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -1989,7 +2073,7 @@ interval.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### What A Zero Wronskian Does Not Always Prove {#what-a-zero-wronskian-does-not-always-prove-44}
+### What A Zero Wronskian Does Not Always Prove {#what-a-zero-wronskian-does-not-always-prove-45}
 
 For arbitrary functions, an identically zero Wronskian does not by itself
 prove dependence.
@@ -2067,7 +2151,7 @@ containing $0$.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Why Solutions Of One Regular Equation Behave Better {#why-solutions-of-one-regular-equation-behave-better-45}
+### Why Solutions Of One Regular Equation Behave Better {#why-solutions-of-one-regular-equation-behave-better-46}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -2080,10 +2164,40 @@ $$
 
 where $p$ and $q$ are continuous on an interval $I$.
 
+The aim is to show that the Wronskian obeys its own first-order differential
+equation. Once that equation is known, the value of the Wronskian at one point
+will control its value throughout the interval.
+
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-For two solutions $y_1,y_2$ of $y''+py'+qy=0$, their Wronskian is:
+Because both functions solve this equation, substituting $y_1$ and $y_2$
+separately gives:
+
+$$
+\begin{aligned}
+y_1''+p(x)y_1'+q(x)y_1&=0, \\
+y_2''+p(x)y_2'+q(x)y_2&=0.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Solving each equation for its second derivative gives the two substitutions
+we will need later:
+
+$$
+\begin{aligned}
+y_1''&=-p(x)y_1'-q(x)y_1, \\
+y_2''&=-p(x)y_2'-q(x)y_2.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Now write the Wronskian of the two functions:
 
 $$
 W=y_1y_2'-y_2y_1'.
@@ -2092,53 +2206,274 @@ $$
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Differentiate it:
+Differentiate both products using the product rule. For the first product:
+
+$$
+(y_1y_2')'=y_1'y_2'+y_1y_2'',
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+and for the second product:
+
+$$
+(y_2y_1')'=y_2'y_1'+y_2y_1''.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Therefore:
 
 $$
 \begin{aligned}
 W'
-&=y_1'y_2'+y_1y_2''-y_2'y_1'-y_2y_1'' \\
-&=y_1y_2''-y_2y_1''.
+&=(y_1y_2')'-(y_2y_1')' \\
+&=\left(y_1'y_2'+y_1y_2''\right)
+-\left(y_2'y_1'+y_2y_1''\right) \\
+&=y_1'y_2'+y_1y_2''-y_2'y_1'-y_2y_1''.
 \end{aligned}
 $$
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Because each function solves the differential equation:
+The first and third terms cancel because multiplication is commutative:
 
 $$
-y_i''=-p(x)y_i'-q(x)y_i.
+y_1'y_2'=y_2'y_1'.
 $$
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Substitute the two second derivatives:
+This leaves:
+
+$$
+W'=y_1y_2''-y_2y_1''.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Now substitute the two second-derivative formulas found earlier:
 
 $$
 \begin{aligned}
 W'
-&=y_1(-py_2'-qy_2)-y_2(-py_1'-qy_1) \\
-&=-py_1y_2'-qy_1y_2+py_2y_1'+qy_2y_1 \\
-&=-p(y_1y_2'-y_2y_1') \\
-&=-pW.
+&=y_1\left[-p(x)y_2'-q(x)y_2\right]
+-y_2\left[-p(x)y_1'-q(x)y_1\right].
 \end{aligned}
 $$
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-So the Wronskian itself satisfies:
+Distribute $y_1$ and $-y_2$ across the brackets:
 
 $$
-W'=-pW.
+\begin{aligned}
+W'
+={}&-p(x)y_1y_2'-q(x)y_1y_2 \\
+&\quad +p(x)y_2y_1'+q(x)y_2y_1.
+\end{aligned}
 $$
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Solving this first-order equation gives Abel's identity:
+The two terms containing $q(x)$ cancel because $y_1y_2=y_2y_1$:
+
+$$
+-q(x)y_1y_2+q(x)y_2y_1=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Therefore:
+
+$$
+\begin{aligned}
+W'
+&=-p(x)y_1y_2'+p(x)y_2y_1' \\
+&=-p(x)\left(y_1y_2'-y_2y_1'\right).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The expression in parentheses is the original Wronskian $W$. Hence the
+Wronskian itself satisfies the first-order equation:
+
+$$
+W'=-p(x)W.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+To solve it, first move the right side to the left:
+
+$$
+W'+p(x)W=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The next goal is to turn the entire left side into the derivative of one
+product. Introduce a function $\mu(x)$ and imagine multiplying the equation by
+it:
+
+$$
+\mu W'+\mu p(x)W=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The product rule says:
+
+$$
+(\mu W)'=\mu W'+\mu'W.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The first term already matches. For the second terms to match as well, choose
+$\mu$ so that:
+
+$$
+\mu'=p(x)\mu.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+We now need a function with exactly this derivative property. Define:
+
+$$
+A(x)=\int_{x_0}^{x}p(s)\,ds.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Here $s$ is only a placeholder inside the integral. By the Fundamental
+Theorem of Calculus:[^1]
+
+$$
+A'(x)=p(x).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Now define the **integrating factor** by:
+
+$$
+\mu(x)=e^{A(x)}
+=\exp\left(\int_{x_0}^{x}p(s)\,ds\right).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Differentiate $\mu$ using the chain rule:
+
+$$
+\begin{aligned}
+\mu'(x)
+&=e^{A(x)}A'(x) \\
+&=e^{A(x)}p(x) \\
+&=p(x)\mu(x).
+\end{aligned}
+$$
+
+Thus this choice of $\mu$ has exactly the property we required.
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Now multiply the original equation $W'+p(x)W=0$ by $\mu(x)$:
+
+$$
+\mu\left(W'+p(x)W\right)=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Expand the left side:
+
+$$
+\mu W'+\mu p(x)W=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Replace $\mu p(x)$ by $\mu'$, since $\mu'=p(x)\mu$:
+
+$$
+\mu W'+\mu'W=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+This left side is now the product-rule expansion we wanted:
+
+$$
+\mu W'+\mu'W=(\mu W)'.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Therefore the differential equation becomes:
+
+$$
+(\mu W)'=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+A function with zero derivative is constant, so compare its value at $x$ with
+its value at the chosen point $x_0$:
+
+$$
+\mu(x)W(x)=\mu(x_0)W(x_0).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+At $x=x_0$, the integral in $\mu$ has equal limits. It is zero, so:
+
+$$
+\mu(x_0)=e^0=1.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Consequently:
+
+$$
+W(x)=\frac{W(x_0)}{\mu(x)}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Substitute the definition of $\mu(x)$ and move the reciprocal into the
+exponent. This gives **Abel's identity**:
 
 $$
 \boxed{
@@ -2156,9 +2491,72 @@ For solutions of the same regular equation, the Wronskian cannot vanish at an
 isolated point and then recover.
 
 ```{=latex}
+\Needspace{10\baselineskip}
+```
+There is one final link to make. Suppose $W(x_0)=0$. At $x_0$, the Wronskian
+matrix is:
+
+$$
+\begin{pmatrix}
+y_1(x_0) & y_2(x_0) \\
+y_1'(x_0) & y_2'(x_0)
+\end{pmatrix}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Its determinant is zero, so the matrix is singular. Therefore there are
+constants $c_1$ and $c_2$, not both zero, such that:
+
+$$
+\begin{aligned}
+c_1y_1(x_0)+c_2y_2(x_0)&=0, \\
+c_1y_1'(x_0)+c_2y_2'(x_0)&=0.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Define a new function by combining the two solutions:
+
+$$
+z=c_1y_1+c_2y_2.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Because the original equation is linear and homogeneous, $z$ is also a
+solution. The two equations above say that its initial data are:
+
+$$
+z(x_0)=0,
+\qquad
+z'(x_0)=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The zero function solves the same equation with the same initial data. Since
+the equation is regular, the uniqueness theorem says there can be only one
+such solution. Hence:
+
+$$
+z(x)=c_1y_1(x)+c_2y_2(x)=0
+\qquad\text{for every }x\in I.
+$$
+
+The constants are not both zero, so this is precisely a linear-dependence
+relation. This is why an identically zero Wronskian does prove dependence when
+the functions are solutions of the same regular homogeneous equation.
+
+```{=latex}
 \Needspace{12\baselineskip}
 ```
-### A Wronskian Decision Rule {#a-wronskian-decision-rule-46}
+### A Wronskian Decision Rule {#a-wronskian-decision-rule-47}
 
 For functions $y_1,\ldots,y_n$ on an interval:
 
@@ -2173,7 +2571,7 @@ This is the safe way to use the Wronskian without claiming more than it proves.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Block 6 Summary {#block-6-summary-47}
+### Block 6 Summary {#block-6-summary-48}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -2198,7 +2596,7 @@ equation.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### The Goal Of This Block {#the-goal-of-this-block-48}
+### The Goal Of This Block {#the-goal-of-this-block-49}
 
 ```{=latex}
 \Needspace{12\baselineskip}
@@ -2215,7 +2613,7 @@ solution and then use initial conditions to determine its constants.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### What A Fundamental Set Is {#what-a-fundamental-set-is-49}
+### What A Fundamental Set Is {#what-a-fundamental-set-is-50}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -2250,7 +2648,7 @@ if it contains redundancy.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Completing The Oscillatory Example {#completing-the-oscillatory-example-50}
+### Completing The Oscillatory Example {#completing-the-oscillatory-example-51}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -2328,7 +2726,7 @@ $$
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Worked Initial-Value Problem {#worked-initial-value-problem-51}
+### Worked Initial-Value Problem {#worked-initial-value-problem-52}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -2477,7 +2875,7 @@ $$
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### The Wronskian Is Also An Initial-Data Determinant {#the-wronskian-is-also-an-initial-data-determinant-52}
+### The Wronskian Is Also An Initial-Data Determinant {#the-wronskian-is-also-an-initial-data-determinant-53}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -2540,18 +2938,24 @@ This links three ideas:
 
 $$
 \boxed{
+\begin{gathered}
 \text{nonzero Wronskian}
+\\
 \Longleftrightarrow
+\\
 \text{independent solution directions}
+\\
 \Longleftrightarrow
+\\
 \text{unique coordinates from initial data}
-}.
+\end{gathered}
+}
 $$
 
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Checking The Third-Order Fundamental Set {#checking-the-third-order-fundamental-set-53}
+### Checking The Third-Order Fundamental Set {#checking-the-third-order-fundamental-set-54}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -2624,7 +3028,7 @@ $$
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Block 7 Summary {#block-7-summary-54}
+### Block 7 Summary {#block-7-summary-55}
 
 A fundamental set for an $n$th-order homogeneous equation contains exactly
 $n$ independent solutions. Their Wronskian is nonzero on the regular interval,
@@ -2641,7 +3045,7 @@ invertible.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### The Goal Of This Block {#the-goal-of-this-block-55}
+### The Goal Of This Block {#the-goal-of-this-block-56}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -2667,7 +3071,7 @@ particular solution.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Associated Homogeneous And Particular Solutions {#associated-homogeneous-and-particular-solutions-56}
+### Associated Homogeneous And Particular Solutions {#associated-homogeneous-and-particular-solutions-57}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -2681,14 +3085,24 @@ $$
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-For $L[y]=f(x)$, the forcing is $f(x)$ and the **associated homogeneous
-equation** is:
+the right side $f(x)$ is the forcing. Setting the forcing equal to zero gives
+the **associated homogeneous equation**:
 
 $$
 L[y]=0.
 $$
 
-Let $y_h$ denote the general solution of the homogeneous equation.
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Let $y_h$ denote the general solution of this homogeneous equation. Therefore:
+
+$$
+L[y_h]=0.
+$$
+
+Because $y_h$ is the general homogeneous solution, it usually contains the
+full set of arbitrary constants needed for the order of the equation.
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -2699,13 +3113,13 @@ $$
 L[y_p]=f(x).
 $$
 
-It contains no arbitrary constants when we use it as the chosen representative
-of the forced response.
+Unlike $y_h$, the chosen $y_p$ contains no arbitrary constants. It is one fixed
+representative of the forced response.
 
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Why $y_h+y_p$ Is A Solution {#why-yhyp-is-a-solution-57}
+### Why $y_h+y_p$ Is A Solution {#why-yhyp-is-a-solution-58}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -2722,7 +3136,7 @@ $$
 and:
 
 $$
-L[y_p]=f.
+L[y_p]=f(x).
 $$
 
 ```{=latex}
@@ -2734,15 +3148,15 @@ $$
 \begin{aligned}
 L[y_h+y_p]
 &=L[y_h]+L[y_p] \\
-&=0+f \\
-&=f.
+&=0+f(x) \\
+&=f(x).
 \end{aligned}
 $$
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Since $L[y_h+y_p]=0+f=f$, every function of the form:
+Since $L[y_h+y_p]=f(x)$, every function of the form:
 
 $$
 y=y_h+y_p
@@ -2753,7 +3167,7 @@ solves the nonhomogeneous equation.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Why This Form Gives Every Solution {#why-this-form-gives-every-solution-58}
+### Why This Form Gives Every Solution {#why-this-form-gives-every-solution-59}
 
 It remains to show that no nonhomogeneous solutions are missing.
 
@@ -2763,7 +3177,7 @@ It remains to show that no nonhomogeneous solutions are missing.
 Let $y$ be any solution of:
 
 $$
-L[y]=f,
+L[y]=f(x),
 $$
 
 ```{=latex}
@@ -2772,7 +3186,7 @@ $$
 and let $y_p$ be one chosen particular solution:
 
 $$
-L[y_p]=f.
+L[y_p]=f(x).
 $$
 
 ```{=latex}
@@ -2794,7 +3208,7 @@ $$
 L[z]
 &=L[y-y_p] \\
 &=L[y]-L[y_p] \\
-&=f-f \\
+&=f(x)-f(x) \\
 &=0.
 \end{aligned}
 $$
@@ -2824,7 +3238,7 @@ This proves both that the formula works and that it captures every solution.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Complete Nonhomogeneous Example {#complete-nonhomogeneous-example-59}
+### Complete Nonhomogeneous Example {#complete-nonhomogeneous-example-60}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -3058,7 +3472,7 @@ $$
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Particular Solutions Are Not Unique {#particular-solutions-are-not-unique-60}
+### Particular Solutions Are Not Unique {#particular-solutions-are-not-unique-61}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -3122,7 +3536,7 @@ Since $c_1+1$ is still an arbitrary constant, the same family results.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### The Geometry Of A Shifted Solution Space {#the-geometry-of-a-shifted-solution-space-61}
+### The Geometry Of A Shifted Solution Space {#the-geometry-of-a-shifted-solution-space-62}
 
 The homogeneous solutions form a vector space because they contain zero and
 are closed under addition and constant scaling.
@@ -3163,7 +3577,7 @@ Another way to see it:
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Superposing Different Forcing Terms {#superposing-different-forcing-terms-62}
+### Superposing Different Forcing Terms {#superposing-different-forcing-terms-63}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -3212,7 +3626,7 @@ with the corresponding particular responses added afterward.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Block 8 Summary {#block-8-summary-63}
+### Block 8 Summary {#block-8-summary-64}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -3244,7 +3658,7 @@ but any two differ by a homogeneous solution.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### The Goal Of This Block {#the-goal-of-this-block-64}
+### The Goal Of This Block {#the-goal-of-this-block-65}
 
 The goal is to decide which theorem or structural result applies without
 skipping its hypotheses.
@@ -3255,7 +3669,7 @@ complete conclusions from the information given.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### A Theory-First Workflow {#a-theory-first-workflow-65}
+### A Theory-First Workflow {#a-theory-first-workflow-66}
 
 #### Step 1: Classify the equation
 
@@ -3302,7 +3716,7 @@ uniqueness guarantee.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Common Mistake: Confusing Homogeneous With Nonlinear {#common-mistake-confusing-homogeneous-with-nonlinear-66}
+### Common Mistake: Confusing Homogeneous With Nonlinear {#common-mistake-confusing-homogeneous-with-nonlinear-67}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -3330,7 +3744,7 @@ solution-space theory applies only to linear equations.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Common Mistake: Treating Any Two Solutions As A Basis {#common-mistake-treating-any-two-solutions-as-a-basis-67}
+### Common Mistake: Treating Any Two Solutions As A Basis {#common-mistake-treating-any-two-solutions-as-a-basis-68}
 
 For a second-order equation, two solutions form a fundamental set only if they
 are independent.
@@ -3352,7 +3766,7 @@ constants can create a second independent shape.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Common Mistake: Using Variable Multipliers In Superposition {#common-mistake-using-variable-multipliers-in-superposition-68}
+### Common Mistake: Using Variable Multipliers In Superposition {#common-mistake-using-variable-multipliers-in-superposition-69}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -3383,7 +3797,7 @@ parameters, but they must satisfy additional equations.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Common Mistake: Reading Too Much From $W=0$ {#common-mistake-reading-too-much-from-w0-69}
+### Common Mistake: Reading Too Much From $W=0$ {#common-mistake-reading-too-much-from-w0-70}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -3403,7 +3817,7 @@ the direct constant-combination definition.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Common Mistake: Adding Two Particular Solutions {#common-mistake-adding-two-particular-solutions-70}
+### Common Mistake: Adding Two Particular Solutions {#common-mistake-adding-two-particular-solutions-71}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -3428,7 +3842,7 @@ $$
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Common Mistake: Omitting The Interval {#common-mistake-omitting-the-interval-71}
+### Common Mistake: Omitting The Interval {#common-mistake-omitting-the-interval-72}
 
 Existence, uniqueness, and independence are interval statements.
 
@@ -3441,7 +3855,7 @@ Write the interval beside the final conclusion.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Chapter Method Summary {#chapter-method-summary-72}
+### Chapter Method Summary {#chapter-method-summary-73}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -3478,7 +3892,7 @@ The central lesson is:
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Practice Problems {#practice-problems-73}
+### Practice Problems {#practice-problems-74}
 
 #### Problem 1: Classify Linear Equations
 
@@ -3732,7 +4146,7 @@ the two particular solutions differ by a homogeneous solution.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Practice Answers {#practice-answers-74}
+### Practice Answers {#practice-answers-75}
 
 ```{=latex}
 \Needspace{12\baselineskip}
@@ -4491,7 +4905,7 @@ the difference is a solution of the associated homogeneous equation.
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
-### Final Takeaway {#final-takeaway-75}
+### Final Takeaway {#final-takeaway-76}
 
 ```{=latex}
 \Needspace{10\baselineskip}
@@ -4522,3 +4936,9 @@ The chapter's final lesson is:
 > the general solution is justified by three checks: every basis function
 > solves the homogeneous equation, the basis functions are independent, and
 > any particular term reproduces the forcing exactly.
+
+[^1]: If the upper limit moves from $x$ to $x+h$, the added
+    interval has width $h$ and height approximately $p(x)$. Hence
+    $A(x+h)-A(x)\approx p(x)h$, so
+    $(A(x+h)-A(x))/h\approx p(x)$. Taking the limit as $h\to0$ gives
+    $A'(x)=p(x)$.

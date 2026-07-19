@@ -179,6 +179,49 @@ and:
 > does this formula satisfy both the equation and the extra conditions?
 ```
 
+### Footnotes For Optional Clarification
+
+Use a footnote when a short piece of additional intuition or clarification
+would help some readers but would interrupt the flow of the main explanation.
+The main text must remain complete and understandable without opening or
+reading the footnote.
+
+Good uses include:
+
+- a brief geometric reason behind a familiar theorem
+- a short reminder of an earlier calculus or algebra fact
+- a notation detail that prevents a likely misunderstanding
+- a secondary interpretation that is helpful but not required for the current
+  derivation
+
+Do not use a footnote to hide:
+
+- a required algebraic step
+- the definition of a new symbol
+- an assumption needed for the result
+- the justification for moving from one displayed equation to the next
+
+If the reader cannot follow the argument without the information, place it in
+the main body instead. Keep each footnote focused on one point and usually no
+longer than two or three sentences. Prefer compact inline mathematics over
+large displayed equations so the note remains readable at footnote size.
+
+In the print edition, use hanging footnotes: place the footnote number to the
+left and align every wrapped line with the beginning of the footnote text.
+This avoids giving only the first line an additional indent. Check the
+rendered page whenever a footnote contains mathematics.
+
+Use standard Markdown footnote syntax:
+
+```markdown
+By the Fundamental Theorem of Calculus,[^moving-limit] we have
+$A'(x)=p(x)$.
+
+[^moving-limit]: If the upper limit moves from $x$ to $x+h$, the added area is
+    approximately $p(x)h$. Dividing by $h$ and taking $h\to0$ gives
+    $A'(x)=p(x)$.
+```
+
 ---
 
 ## 6. Worked Examples
@@ -649,6 +692,8 @@ Before considering a note complete, check that:
 - final solutions show the chain from the reconstructed expression to the
   equation being solved
 - important ideas receive a plain-English restatement
+- footnotes add optional intuition or clarification without hiding reasoning
+  required to follow the main text
 - domains and conditions are not omitted
 - common mistakes are identified where useful
 - the final summary can stand alone as a revision aid
