@@ -120,6 +120,20 @@ function Pandoc(doc)
       table.insert(output, block)
       index = index + 1
 
+    elseif raw_html_is(block, "<!-- print-compact-equation -->")
+      and blocks[index + 1]
+      and blocks[index + 1].t == "Para"
+      and is_display_math_paragraph(blocks[index + 2]) then
+      -- A short local explanation and equation need less room than the
+      -- default keep-together rule. The marker prevents avoidable gaps while
+      -- still ensuring that the equation follows its introduction.
+      table.insert(
+        output,
+        pandoc.RawBlock("latex", "\\Needspace{7\\baselineskip}")
+      )
+      table.insert(output, blocks[index + 1])
+      index = index + 2
+
     elseif raw_html_is(block, "<!-- print-page-break -->") then
       table.insert(output, pandoc.RawBlock("latex", "\\clearpage"))
       index = index + 1

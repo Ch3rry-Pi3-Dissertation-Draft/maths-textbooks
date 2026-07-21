@@ -1020,13 +1020,45 @@ $$
 Apply $(D-\rho)$ a second time:
 
 $$
-(D-\rho)^2\left(e^{\rho x}v\right)=e^{\rho x}v''.
+\begin{aligned}
+(D-\rho)^2\left(e^{\rho x}v\right)
+&=(D-\rho)\left[(D-\rho)\left(e^{\rho x}v\right)\right] \\
+&=(D-\rho)\left(e^{\rho x}v'\right) \\
+&=e^{\rho x}(v')' \\
+&=e^{\rho x}v''.
+\end{aligned}
+$$
+
+The same cancellation identity applies because $v'$ is another multiplier of
+$e^{\rho x}$.
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+To see why the pattern continues, suppose that after $k$ applications:
+
+$$
+(D-\rho)^k\left(e^{\rho x}v\right)=e^{\rho x}v^{(k)}.
 $$
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Continuing the pattern gives:
+Apply $(D-\rho)$ once more:
+
+$$
+\begin{aligned}
+(D-\rho)^{k+1}\left(e^{\rho x}v\right)
+&=(D-\rho)\left(e^{\rho x}v^{(k)}\right) \\
+&=e^{\rho x}\left(v^{(k)}\right)' \\
+&=e^{\rho x}v^{(k+1)}.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Therefore, after $s$ applications:
 
 $$
 \boxed{
@@ -1037,8 +1069,31 @@ $$
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-If $(r-\rho)^s$ is the entire characteristic polynomial for this part of the
-equation, then:
+Now connect this identity to the characteristic polynomial. If $\rho$ is a
+root of multiplicity $s$, the full polynomial can be written as:
+
+$$
+p(r)=q(r)(r-\rho)^s,
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+where $q(r)$ contains the remaining factors. The differential equation is
+therefore:
+
+$$
+p(D)y=q(D)(D-\rho)^s y=0.
+$$
+
+Here $q(D)$ is the differential operator built from the remaining factor
+$q(r)$. The rightmost operator $(D-\rho)^s$ acts first.
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+To construct the solution modes contributed by the root $\rho$, solve the
+factor equation:
 
 $$
 (D-\rho)^sy=0.
@@ -1047,7 +1102,26 @@ $$
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Substitute $y=e^{\rho x}v$:
+Any function satisfying this factor equation also satisfies the full equation,
+because:
+
+$$
+q(D)(D-\rho)^sy=q(D)(0)=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Now substitute $y=e^{\rho x}v$ into the factor equation:
+
+$$
+(D-\rho)^s\left(e^{\rho x}v\right)=0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Use the identity derived above:
 
 $$
 e^{\rho x}v^{(s)}=0.
@@ -1056,7 +1130,7 @@ $$
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Since the exponential is nonzero:
+Since $e^{\rho x}$ is nonzero for every real $x$, divide both sides by it:
 
 $$
 v^{(s)}=0.
@@ -1233,7 +1307,37 @@ $$
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Distribute each term from the first polynomial:
+Treat each term in the first polynomial as a separate multiplier. First
+multiply $r^3$ by every term in the quadratic:
+
+$$
+\begin{aligned}
+r^3(r^2+6r+9)
+&=r^3(r^2)+r^3(6r)+r^3(9) \\
+&=r^5+6r^4+9r^3.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Repeat this for the remaining three terms:
+
+$$
+\begin{aligned}
+-6r^2(r^2+6r+9)
+&=-6r^4-36r^3-54r^2, \\
+12r(r^2+6r+9)
+&=12r^3+72r^2+108r, \\
+-8(r^2+6r+9)
+&=-8r^2-48r-72.
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Now add the four products:
 
 $$
 \begin{aligned}
@@ -1458,32 +1562,73 @@ The count matches the fifth-order equation.
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Suppose a real-coefficient equation has the solution:
+Suppose the characteristic polynomial of a real-coefficient equation has the
+root:
 
 $$
-e^{3x}\cos(5x).
-$$
-
-```{=latex}
-\Needspace{10\baselineskip}
-```
-This mode comes from roots:
-
-$$
-r=3\pm5i.
+r=3+5i.
 $$
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-The same conjugate pair necessarily supplies:
+Because the polynomial has real coefficients, the conjugate root must appear
+as well:
 
 $$
+r=3-5i.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The two roots produce the complex exponential modes
+$e^{(3+5i)x}$ and $e^{(3-5i)x}$. Euler's formula gives:
+
+$$
+e^{(3+5i)x}
+=e^{3x}\left(\cos(5x)+i\sin(5x)\right).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Its real part and imaginary part are therefore two real solution modes:
+
+$$
+e^{3x}\cos(5x)
+\qquad\text{and}\qquad
 e^{3x}\sin(5x).
 $$
 
-One trigonometric function alone does not represent the complete real basis for
-a conjugate pair.
+```{=latex}
+\Needspace{10\baselineskip}
+```
+There is also a useful derivative-based way to see why they travel together.
+Differentiate the cosine mode:
+
+$$
+\frac{d}{dx}\left(e^{3x}\cos(5x)\right)
+=e^{3x}\left(3\cos(5x)-5\sin(5x)\right).
+$$
+
+The sine mode appears immediately. Repeated differentiation keeps mixing sine
+and cosine, so the two functions form a natural pair for a differential
+equation.
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The complete real contribution from the conjugate roots is therefore:
+
+$$
+\boxed{
+y=e^{3x}\left(c_1\cos(5x)+c_2\sin(5x)\right)
+}
+$$
+
+Omitting the sine term would remove one independent solution direction and one
+arbitrary constant, leaving an incomplete solution family.
 
 ```{=latex}
 \Needspace{12\baselineskip}
@@ -2340,18 +2485,30 @@ The dependable chain is:
 
 $$
 \boxed{
+\begin{gathered}
 \text{ODE order}
-\longrightarrow
+\\
+\downarrow
+\\
 \text{characteristic polynomial}
-\longrightarrow
+\\
+\downarrow
+\\
 \text{root ledger}
-\longrightarrow
+\\
+\downarrow
+\\
 \text{real basis}
-\longrightarrow
+\\
+\downarrow
+\\
 \text{mode count}
-\longrightarrow
+\\
+\downarrow
+\\
 \text{conditions}
-}.
+\end{gathered}
+}
 $$
 
 The mode count is the central safeguard against incomplete higher-order

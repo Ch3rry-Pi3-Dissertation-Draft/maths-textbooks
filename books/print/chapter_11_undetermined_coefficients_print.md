@@ -1694,13 +1694,107 @@ y_p'
 \end{aligned}
 $$
 
-#### Step 4: Use a local second-derivative calculation
+#### Step 4: Differentiate the grouped first derivative
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Differentiate the grouped first derivative. The resulting second derivative
-is:
+To keep the product-rule calculation readable, define:
+
+$$
+P(x)=A+2(Cx+D),
+\qquad
+Q(x)=C-2(Ax+B).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Then the grouped first derivative from Step 3 is:
+
+$$
+y_p'=P(x)\cos(2x)+Q(x)\sin(2x).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Differentiate the two coefficient functions:
+
+$$
+P'(x)=2C,
+\qquad
+Q'(x)=-2A.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Apply the product rule to the cosine product:
+
+$$
+\begin{aligned}
+\frac{d}{dx}\left[P(x)\cos(2x)\right]
+&=P'(x)\cos(2x)-2P(x)\sin(2x).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Apply it separately to the sine product:
+
+$$
+\begin{aligned}
+\frac{d}{dx}\left[Q(x)\sin(2x)\right]
+&=Q'(x)\sin(2x)+2Q(x)\cos(2x).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{7\baselineskip}
+```
+Add the two derivatives and group the cosine and sine terms:
+
+$$
+\begin{aligned}
+y_p''
+&=[P'(x)+2Q(x)]\cos(2x) \\
+&\quad+[Q'(x)-2P(x)]\sin(2x).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Now substitute the definitions of $P$, $Q$, $P'$, and $Q'$. The cosine
+coefficient becomes:
+
+$$
+\begin{aligned}
+P'+2Q
+&=2C+2[C-2(Ax+B)] \\
+&=4C-4(Ax+B).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The sine coefficient becomes:
+
+$$
+\begin{aligned}
+Q'-2P
+&=-2A-2[A+2(Cx+D)] \\
+&=-4A-4(Cx+D).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Therefore:
 
 $$
 \begin{aligned}
@@ -1709,19 +1803,6 @@ y_p''
 &\quad+[-4A-4(Cx+D)]\sin(2x).
 \end{aligned}
 $$
-
-```{=latex}
-\Needspace{10\baselineskip}
-```
-To see the source of the first cosine coefficient, differentiate both parts
-that contribute cosine:
-
-$$
-2C\cos(2x)+2[C-2(Ax+B)]\cos(2x)
-=[4C-4(Ax+B)]\cos(2x).
-$$
-
-The sine coefficient follows in the same way from the product rule.
 
 #### Step 5: Add $y_p$ to $y_p''$
 
@@ -2038,47 +2119,177 @@ The practical meaning:
 ### Reading The Correcting Power From Multiplicity {#reading-the-correcting-power-from-multiplicity-28}
 
 ```{=latex}
-\Needspace{10\baselineskip}
+\Needspace{12\baselineskip}
 ```
-For an exponential-trigonometric forcing, associate the complex number:
+The purpose of the overlap check is to answer one question:
 
-$$
-\lambda=a+i\omega.
-$$
+```{=latex}
+\Needspace{8\baselineskip}
+```
+> how many times must the complete base trial be multiplied by $x$ before it
+> is independent of the homogeneous solution?
 
-Here:
+The answer is controlled by a characteristic-root multiplicity. Keep the
+following three roles separate:
 
--   $a$ is the exponential rate
--   $\omega$ is the trigonometric frequency
--   pure exponential forcing has $\omega=0$
--   pure polynomial forcing corresponds to $\lambda=0$
+1.  the **forcing** supplies the exponential rate $a$ and frequency $\omega$
+2.  the **characteristic polynomial** tells us whether the corresponding roots
+    occur and how many times they occur
+3.  that multiplicity becomes the correcting power $s$
 
-Compare $\lambda$ with the roots of the characteristic polynomial.
-
-If $\lambda$ is not a root, use $s=0$ and keep the base trial unchanged.
-
-If $\lambda$ is a root of multiplicity $s$, multiply the **entire** base trial
-by $x^s$.
+#### Step 1: Read $a$ and $\omega$ from the forcing
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-The overlap ledger is:
+A general exponential-trigonometric forcing has the form:
 
 $$
-\begin{array}{c|c}
-\text{Root status} & \text{Trial correction} \\
+e^{ax}
+\left[P_n(x)\cos(\omega x)+Q_n(x)\sin(\omega x)\right].
+$$
+
+Read the two values directly from its visible factors:
+
+-   $a$ is the coefficient of $x$ in the exponential $e^{ax}$
+-   $\omega$ is the frequency in $\cos(\omega x)$ and $\sin(\omega x)$
+
+If no exponential is visible, then $a=0$ because $e^{0x}=1$. If no
+trigonometric factor is visible, then $\omega=0$.
+
+The polynomial degrees in $P_n$ and $Q_n$ determine the polynomial part of
+the base trial. They do **not** determine the correcting power.
+
+#### Step 2: Identify the values to compare with the characteristic roots
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The exponential rate and trigonometric frequency combine as:
+
+$$
+a+i\omega
+\qquad\text{and}\qquad
+a-i\omega.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+This pairing comes from Euler's formula:
+
+$$
+e^{(a+i\omega)x}
+=e^{ax}\left[\cos(\omega x)+i\sin(\omega x)\right].
+$$
+
+We are not replacing the real forcing with a complex one. Euler's formula
+only tells us which characteristic roots correspond to the real functions
+$e^{ax}\cos(\omega x)$ and $e^{ax}\sin(\omega x)$.
+
+When $\omega=0$, both values reduce to the single real value $a$. A pure
+polynomial has $a=0$ and $\omega=0$, so its comparison value is $0$.
+
+#### Step 3: Read $s$ from the characteristic polynomial
+
+Factor the characteristic polynomial $p(r)$ and compare its roots with
+$a\pm i\omega$.
+
+-   if neither value is a root, set $s=0$
+-   if the matching root or pair is simple, set $s=1$
+-   if the matching root or pair has multiplicity $2$, set $s=2$
+-   in general, set $s$ equal to the matching multiplicity
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+For a real exponential mode, multiplicity $s$ appears in a factor of the
+form:
+
+$$
+p(r)=(r-a)^s q(r),
+\qquad
+q(a)\neq0.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+For an exponential-trigonometric mode in a real-coefficient equation, the
+conjugate roots have the same multiplicity. Their contribution can be written
+as:
+
+$$
+p(r)=\left[(r-a)^2+\omega^2\right]^s q(r).
+$$
+
+If the relevant factor is absent, its multiplicity is zero.
+
+#### Step 4: Correct the complete base trial
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Let $Y_{\mathrm{base}}(x)$ denote the complete trial suggested by the forcing.
+The corrected trial is:
+
+$$
+\boxed{
+y_p=x^sY_{\mathrm{base}}(x)
+}.
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The resulting rule is shown below. The example column displays the relevant
+factor pattern inside $p(r)$; it does not introduce a new forcing term.
+
+$$
+\begin{array}{c|c|c|c}
+\text{Match} & \text{Example factor in }p(r) & s & \text{Correction} \\
 \hline
-\lambda\text{ is not a root} & x^0=1 \\
-\lambda\text{ is a simple root} & x \\
-\lambda\text{ has multiplicity }2 & x^2 \\
-\lambda\text{ has multiplicity }s & x^s
+\text{no match} & \text{relevant factor absent} & 0 & x^0=1 \\
+\text{simple real root} & r-a & 1 & x \\
+\text{simple conjugate pair} & (r-a)^2+\omega^2 & 1 & x \\
+\text{double real root} & (r-a)^2 & 2 & x^2 \\
+\text{double conjugate pair} & \left[(r-a)^2+\omega^2\right]^2 & 2 & x^2 \\
+\text{multiplicity }s & (\text{relevant factor})^s & s & x^s
 \end{array}
 $$
 
 ```{=latex}
-\clearpage
+\Needspace{10\baselineskip}
 ```
+Why does the multiplicity determine the power? If $a$ is a real root of
+multiplicity $s$, the homogeneous solution already contains:
+
+$$
+e^{ax},
+\quad
+xe^{ax},
+\quad
+\ldots,
+\quad
+x^{s-1}e^{ax}.
+$$
+
+Multiplying the base trial by $x^s$ moves it beyond every one of these
+overlapping functions. The same principle applies to a repeated conjugate
+pair, with both the cosine and sine partners multiplied by the complete
+factor $x^s$.
+
+```{=latex}
+\Needspace{12\baselineskip}
+```
+The main point:
+
+```{=latex}
+\Needspace{8\baselineskip}
+```
+> read $a$ and $\omega$ from the forcing, read $s$ from the characteristic
+> roots, then multiply the complete base trial by $x^s$.
+
 ```{=latex}
 \Needspace{12\baselineskip}
 ```
@@ -2282,129 +2493,231 @@ $$
 y_h=c_1\cos(2x)+c_2\sin(2x).
 $$
 
-#### Step 2: Correct the paired base trial
+#### Step 2: Build and correct the paired trial
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-The base trial for $6\cos(2x)$ is:
+Differentiating a cosine produces a sine, and differentiating a sine produces
+a cosine. The base trial must therefore contain both functions:
 
 $$
-A\cos(2x)+B\sin(2x).
+y_{p,\mathrm{base}}=A\cos(2x)+B\sin(2x).
 $$
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Both functions already occur in $y_h$. The pair $\pm2i$ is simple, so
-multiply the entire paired trial by $x$:
+However, both functions in this base trial already occur in $y_h$. The roots
+$\pm2i$ form a simple conjugate pair, so the correcting power is $s=1$.
+Multiply the complete paired trial by $x$:
 
 $$
 y_p=x[A\cos(2x)+B\sin(2x)].
 $$
 
-#### Step 3: Differentiate the two corrected modes
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Expand the corrected trial before differentiating:
+
+$$
+y_p=Ax\cos(2x)+Bx\sin(2x).
+$$
+
+#### Step 3: Find the first derivative
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-For the cosine component:
+Apply the product rule to both terms:
 
 $$
 \begin{aligned}
-\frac{d}{dx}[x\cos(2x)]
-&=\cos(2x)-2x\sin(2x), \\
-\frac{d^2}{dx^2}[x\cos(2x)]
-&=-4\sin(2x)-4x\cos(2x).
+y_p'
+&=A\left[\cos(2x)-2x\sin(2x)\right]
+  +B\left[\sin(2x)+2x\cos(2x)\right] \\
+&=A\cos(2x)-2Ax\sin(2x)
+  +B\sin(2x)+2Bx\cos(2x).
 \end{aligned}
 $$
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Using
-$(x\cos(2x))''=-4\sin(2x)-4x\cos(2x)$, add
-$4[x\cos(2x)]$:
+Group the cosine and sine terms:
 
 $$
-\left(\frac{d^2}{dx^2}+4\right)[x\cos(2x)]
-=-4\sin(2x).
+y_p'=(A+2Bx)\cos(2x)+(B-2Ax)\sin(2x).
 $$
+
+#### Step 4: Find the second derivative
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-For the sine component:
+Differentiate the cosine term in $y_p'$:
 
 $$
 \begin{aligned}
-\frac{d}{dx}[x\sin(2x)]
-&=\sin(2x)+2x\cos(2x), \\
-\frac{d^2}{dx^2}[x\sin(2x)]
-&=4\cos(2x)-4x\sin(2x).
+\frac{d}{dx}\left[(A+2Bx)\cos(2x)\right]
+&=2B\cos(2x)-2(A+2Bx)\sin(2x).
 \end{aligned}
 $$
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Therefore:
+Differentiate the sine term in $y_p'$:
 
 $$
-\left(\frac{d^2}{dx^2}+4\right)[x\sin(2x)]
-=4\cos(2x).
+\begin{aligned}
+\frac{d}{dx}\left[(B-2Ax)\sin(2x)\right]
+&=-2A\sin(2x)+2(B-2Ax)\cos(2x).
+\end{aligned}
 $$
-
-#### Step 4: Apply the operator to the complete trial
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Using the two outputs just calculated:
+Add these derivatives and group like trigonometric terms:
+
+$$
+\begin{aligned}
+y_p''
+&=\left[2B+2(B-2Ax)\right]\cos(2x) \\
+&\quad+\left[-2(A+2Bx)-2A\right]\sin(2x) \\
+&=(4B-4Ax)\cos(2x)+(-4A-4Bx)\sin(2x).
+\end{aligned}
+$$
+
+#### Step 5: Substitute the complete trial into the differential equation
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The left side of the equation is $y_p''+4y_p$. From the corrected trial:
+
+$$
+\begin{aligned}
+4y_p
+&=4\left[Ax\cos(2x)+Bx\sin(2x)\right] \\
+&=4Ax\cos(2x)+4Bx\sin(2x).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Now add $y_p''$ and $4y_p$:
 
 $$
 \begin{aligned}
 y_p''+4y_p
-&=A[-4\sin(2x)]+B[4\cos(2x)] \\
+&=(4B-4Ax)\cos(2x)+(-4A-4Bx)\sin(2x) \\
+&\quad+4Ax\cos(2x)+4Bx\sin(2x) \\
+&=(4B-4Ax+4Ax)\cos(2x) \\
+&\quad+(-4A-4Bx+4Bx)\sin(2x) \\
 &=4B\cos(2x)-4A\sin(2x).
+\end{aligned}
+$$
+
+The $x\cos(2x)$ terms cancel each other, as do the $x\sin(2x)$ terms.
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+The right side can be written as:
+
+$$
+6\cos(2x)+0\sin(2x).
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Match the cosine coefficients and then the sine coefficients:
+
+$$
+\begin{aligned}
+4B&=6, \\
+-4A&=0.
 \end{aligned}
 $$
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-Match this with $6\cos(2x)+0\sin(2x)$:
+Solve for $A$ and $B$:
 
 $$
-4B=6,
-\qquad
--4A=0.
-$$
-
-```{=latex}
-\Needspace{10\baselineskip}
-```
-Thus:
-
-$$
-B=\frac32,
-\qquad
-A=0.
+\begin{aligned}
+B&=\frac32, \\
+A&=0.
+\end{aligned}
 $$
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
-The particular solution is:
+Substitute these values into the corrected trial:
 
 $$
-y_p=\frac32x\sin(2x).
+\begin{aligned}
+y_p
+&=x\left[0\cos(2x)+\frac32\sin(2x)\right] \\
+&=\frac32x\sin(2x).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+#### Step 6: Verify the particular solution
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Differentiate $y_p=\frac32x\sin(2x)$:
+
+$$
+\begin{aligned}
+y_p'
+&=\frac32\sin(2x)+3x\cos(2x), \\
+y_p''
+&=3\cos(2x)+3\cos(2x)-6x\sin(2x) \\
+&=6\cos(2x)-6x\sin(2x).
+\end{aligned}
+$$
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Also:
+
+$$
+4y_p=6x\sin(2x).
 $$
 
 ```{=latex}
 \Needspace{10\baselineskip}
 ```
 Therefore:
+
+$$
+\begin{aligned}
+y_p''+4y_p
+&=6\cos(2x)-6x\sin(2x)+6x\sin(2x) \\
+&=6\cos(2x),
+\end{aligned}
+$$
+
+which matches the forcing.
+
+```{=latex}
+\Needspace{10\baselineskip}
+```
+Add $y_p$ to the homogeneous solution:
 
 $$
 \boxed{

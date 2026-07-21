@@ -2443,16 +2443,18 @@ Check the differential equation and all extra conditions separately.
 
 </details>
 
+<!-- print-page-break -->
+
 <details open>
 <summary><strong>Common Mistake: Writing The Wrong Polynomial</strong></summary>
 
-For:
+Consider the equation:
 
 $$
 4y''-3y'+7y=0,
 $$
 
-For the equation $4y''-3y'+7y=0$, the characteristic equation is:
+Its characteristic equation is:
 
 $$
 4r^2-3r+7=0.
@@ -2641,18 +2643,30 @@ The dependable sequence is:
 
 $$
 \boxed{
+\begin{gathered}
 \text{classify}
-\longrightarrow
+\\
+\downarrow
+\\
 \text{characteristic equation}
-\longrightarrow
+\\
+\downarrow
+\\
 \text{roots}
-\longrightarrow
+\\
+\downarrow
+\\
 \text{general family}
-\longrightarrow
+\\
+\downarrow
+\\
 \text{conditions}
-\longrightarrow
+\\
+\downarrow
+\\
 \text{verification}
-}.
+\end{gathered}
+}
 $$
 
 Most errors come from skipping one of these decisions or using a root formula
